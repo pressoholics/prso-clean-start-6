@@ -1,0 +1,53 @@
+/* Parallax slide cotainer styles */
+
+//Slide Background Container
+.parallax-slide-bg {
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    height: 100%;
+    width: 100%;
+}
+
+//Slide row container
+.parallax-slide-row {
+	display: table;
+    table-layout: fixed;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+//Slide content container
+.parallax-slide-content {
+	display: table;
+	height: 100%;
+	width: 100%;
+}
+
+//Demo Styles
+#slide-1 .parallax-slide-bg {
+	background-image:url('https://ihatetomatoes.net/demos/parallax-scroll-effect/img/bcg_slide-1.jpg');
+}
+
+#slide-2 .parallax-slide-bg {
+    background: none;
+    background-color: #010101;
+    height: 310px;
+    text-align: center
+}
+
+#slide-5 {position: relative;}
+#slide-5 .parallax-slide-bg {background-image:url('https://ihatetomatoes.net/demos/parallax-scroll-effect/img/bcg_slide-5.jpg')}
+#slide-5 .parallax-slide-bg-2 {
+    background-image:url('https://ihatetomatoes.net/demos/parallax-scroll-effect/img/bcg_slide-5b.jpg');
+    position: fixed; bottom: 0; left: 0;
+    opacity: 0; z-index: 1
+}
+#slide-5 .parallax-slide-bg-3 {
+    background: none; background-color: #010101;
+    position: fixed; bottom: 0; left: 0;
+    opacity: 0; z-index: 2
+}

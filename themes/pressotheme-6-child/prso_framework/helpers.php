@@ -1,0 +1,556 @@
+<?php
+/**
+ * prso_set_cookie
+ *
+ * Helper to set a secure, httponly, samesite=strict cookie
+ *
+ * @param string $name - cookie name
+ * @param string $value - cookie value
+ * @param int $timestamp - expires timestamp in milliseconds
+ *
+ * @access public
+ * @author Ben Moody
+ */
+function prso_set_cookie( $name = null, $value = null, $timestamp = null ) {
+
+	//vars
+	$cookie_expires = null;
+
+	//If no timestamp provided default to session cookie
+	if ( ! empty( $timestamp ) ) {
+		$cookie_expires = date( 'D, d M Y H:i:s e', $timestamp );
+	}
+
+	$site_url = get_site_url();
+
+	//Remove http to get just domain
+	$find        = array( 'http://', 'https://' );
+	$replace     = '';
+	$site_domain = str_replace( $find, $replace, $site_url );
+
+	$cookie_header = 'Set-Cookie: ' . esc_attr( $name ) . '=' . esc_attr( $value ) . '; path=/; domain=' . $site_domain . '; Expires=' . $cookie_expires . '; HttpOnly; Secure; SameSite=Strict';
+
+	header( $cookie_header );
+}
+
+/**
+ * prso_get_image_size_srcset_attr
+ *
+ * @CALLED BY FILTER 'wp_get_attachment_image_attributes'
+ *
+ * Helper to generate the image srcset attritbute for a specific custom image
+ * size based on the rules set in the prso_register_theme_custom_image_srcset()
+ * function.
+ *
+ * If a srcset rule is detected it adds the srcset attribute via the 'wp_get_attachment_image_attributes' filter
+ *
+ *
+ * @param int $attachment_id
+ * @param string $master_image_size
+ *
+ * @return string $srcset
+ * @access public
+ * @author Ben Moody
+ */
+add_filter( 'wp_get_attachment_image_attributes', 'prso_get_image_size_srcset_attr', 900, 3 );
+function prso_get_image_size_srcset_attr( $attr, $attachment, $master_image_size ) {
+
+	//vars
+	global $prso_srcset_rules;
+	$sources = array();
+	$srcset  = '';
+
+	if( is_admin() ) {
+		return $attr;
+	}
+
+	if( !isset($attachment->ID) ) {
+		return $attr;
+	}
+
+	if( !isset($prso_srcset_rules[ $master_image_size ]) ) {
+		return $attr;
+	}
+
+	$attachment_id = $attachment->ID;
+
+	//Build sources for this image size based on rules
+	foreach ( $prso_srcset_rules[ $master_image_size ] as $rules ) {
+
+		$sources[ $rules['value'] ] = array(
+			'url'        => wp_get_attachment_image_url( $attachment_id, $rules['size'] ),
+			'descriptor' => $rules['descriptor'],
+			'value'      => intval( $rules['value'] ),
+		);
+
+	}
+
+	if ( empty( $sources ) ) {
+		return null;
+	}
+
+	foreach ( $sources as $source ) {
+		$srcset .= str_replace( ' ', '%20', $source['url'] ) . ' ' . $source['value'] . $source['descriptor'] . ', ';
+	}
+
+	$attr['srcset'] = $srcset;
+
+	return $attr;
+}
+
+/**
+* prso_custom_image_srcset_sizes_attr
+*
+* @CALLED BY FILTER 'wp_calculate_image_sizes'
+*
+* Filter the sizes attribute of srcset images
+*
+* @access public
+* @author Ben Moody
+*/
+add_filter( 'wp_calculate_image_sizes', 'prso_custom_image_srcset_sizes_attr', 900, 2 );
+function prso_custom_image_srcset_sizes_attr( $sizes, $size ) {
+
+	$sizes = '';
+
+	return $sizes;
+}
+
+/**
+ * prso_register_theme_custom_image_srcset
+ *
+ * @CALLED BY ACTION 'init'
+ *
+ * Setup the srcset rules for any custom images
+ *
+ * @param array $prso_srcset_rules
+ * @access public
+ * @author Ben Moody
+ */
+add_action( 'init', 'prso_register_theme_custom_image_srcset' );
+function prso_register_theme_custom_image_srcset() {
+
+	//vars
+	global $prso_srcset_rules;
+
+	$prso_srcset_rules = array(
+		'innovators-grid' => array(
+			array(
+				'size'       => 'innovators-grid',
+				'descriptor' => 'w', //w for width based image replace OR x for pixel density
+				'value' => 370, //px width image size based on breakpoint, or pixel density if for retina
+			),
+			array(
+				'size'       => 'innovators-grid--2x',
+				'descriptor' => 'w', //w for width based image replace OR x for pixel density
+				'value' => 752, //px width image size based on breakpoint, or pixel density if for retina
+			),
+			array(
+				'size'       => 'innovators-grid',
+				'descriptor' => 'w', //w for width based image replace OR x for pixel density
+				'value' => 3000, //px width image size based on breakpoint, or pixel density if for retina
+			),
+		),
+		'posts-grid-small' => array(
+			array(
+				'size'       => 'posts-grid-small',
+				'descriptor' => 'w', //w for width based image replace OR x for pixel density
+				'value' => 370, //px width image size based on breakpoint, or pixel density if for retina
+			),
+			array(
+				'size'       => 'posts-grid-small--2x',
+				'descriptor' => 'w', //w for width based image replace OR x for pixel density
+				'value' => 752, //px width image size based on breakpoint, or pixel density if for retina
+			),
+			array(
+				'size'       => 'posts-grid-small',
+				'descriptor' => 'w', //w for width based image replace OR x for pixel density
+				'value' => 3000, //px width image size based on breakpoint, or pixel density if for retina
+			),
+		),
+		'partners-logo' => array(
+			array(
+				'size'       => 'posts-grid-small--2x',
+				'descriptor' => 'x', //w for width based image replace OR x for pixel density
+				'value' => 2, //px width image size based on breakpoint, or pixel density if for retina
+			),
+		),
+		'content-section-posts' => array(
+			array(
+				'size'       => 'content-section-posts--2x',
+				'descriptor' => 'x', //w for width based image replace OR x for pixel density
+				'value' => 2, //px width image size based on breakpoint, or pixel density if for retina
+			),
+		),
+	);
+
+}
+
+/**
+ * ADD CUSTOM THEME FUNCTIONS HERE -----
+ *
+ */
+
+/**
+ * WooCommerce Support
+ *
+ * Include theme woocommerce file to use a framework for woo projects
+ *
+ * @access public
+ * @author Ben Moody
+ */
+//prso_include_file( get_stylesheet_directory() . '/prso_framework/woocommerce.php' );
+
+/**
+ * prso_allow_iframes_filter
+ *
+ * @CALLED BY FILTER 'wp_kses_allowed_html'
+ *
+ * Allow iframe output when using wp_kses_post
+ *
+ * @access    public
+ * @author    Ben Moody
+ */
+//add_filter( 'wp_kses_allowed_html', 'prso_allow_iframes_filter' );
+function prso_allow_iframes_filter( $allowedposttags ) {
+
+	// Allow iframes and the following attributes
+	$allowedposttags['iframe'] = array(
+		'align'        => true,
+		'width'        => true,
+		'height'       => true,
+		'frameborder'  => true,
+		'name'         => true,
+		'src'          => true,
+		'id'           => true,
+		'class'        => true,
+		'style'        => true,
+		'scrolling'    => true,
+		'marginwidth'  => true,
+		'marginheight' => true,
+	);
+
+	return $allowedposttags;
+}
+
+//Add BugHerd script for admins only
+//add_action( 'wp_footer', 'gcc_enqueue_bugherd_admin' );
+function gcc_enqueue_bugherd_admin() {
+	if ( current_user_can( 'manage_options' ) ):
+		?>
+		<script type='text/javascript'>
+            (function (d, t) {
+                var bh = d.createElement(t), s = d.getElementsByTagName(t)[0];
+                bh.type = 'text/javascript';
+                bh.src = 'https://www.bugherd.com/sidebarv2.js?apikey=';
+                s.parentNode.insertBefore(bh, s);
+            })(document, 'script');
+		</script>
+	<?php
+	endif;
+}
+
+/**
+ * prso_custom_login_view
+ *
+ * @CAlled by: 'login_enqueue_scripts'
+ *
+ * Customize the wp login view
+ *
+ * @access    public
+ * @author    Ben Moody
+ */
+//add_action( 'login_enqueue_scripts', 'prso_custom_login_view' );
+function prso_custom_login_view() { ?>
+	<style type="text/css">
+		body {
+
+		}
+
+		.login h1 a {
+			background-image: url(<?php echo get_stylesheet_directory_uri(); ?>/dist/assets/img/admin/site_login_logo.png);
+			background-size: cover;
+			display: block;
+			width: 324px;
+		}
+	</style>
+<?php }
+
+/**
+ * prso_get_queried_term_name
+ *
+ * Helper to return current queried term id if set
+ *
+ * @access public
+ * @author Ben Moody
+ */
+function prso_get_queried_term_id() {
+
+	//vars
+	$queried_obj = get_queried_object();
+
+	if ( ! isset( $queried_obj->term_id ) ) {
+		return false;
+	}
+
+	return intval( $queried_obj->term_id );
+}
+
+/**
+ * prso_get_search_query
+ *
+ * Helper to return search query string if set
+ *
+ * @access public
+ * @author Ben Moody
+ */
+function prso_get_search_query() {
+
+	//vars
+	$query = esc_html( get_search_query() );
+
+	if ( empty( $query ) ) {
+		return false;
+	}
+
+	return $query;
+}
+
+/**
+ * prso_tiny_mce_editor_styles
+ *
+ * @CALLED BY ACTION 'init'
+ *
+ * Enqueue custom visual editor stylesheet
+ *
+ * @access    public
+ * @author    Ben Moody
+ */
+//add_action( 'init', 'prso_tiny_mce_editor_styles', 10 );
+function prso_tiny_mce_editor_styles() {
+
+	add_editor_style();
+
+}
+
+/**
+ * Enqueue supplemental block editor styles.
+ */
+//add_action( 'enqueue_block_editor_assets', 'prso_editor_frame_styles' );
+function prso_editor_frame_styles() {
+
+	wp_enqueue_style(
+		'prso-editor-frame-styles',
+		get_theme_file_uri( 'block-editor-style.css' ),
+		false,
+		'1.0',
+		'all'
+	);
+
+}
+
+/**
+* prso_disable_frontend_embeds_init
+*
+* @CALLED BY ACTION 'init'
+*
+* Disable embeds for frontend
+*
+* @access public
+* @author Ben Moody
+*/
+add_action( 'init', 'prso_disable_frontend_embeds_init', 9999 );
+function prso_disable_frontend_embeds_init() {
+
+	if( is_admin() ) {
+		return;
+	}
+
+	if ( ! method_exists( 'Prso_Gutenberg', 'is_gutenberg_request' ) ) {
+		return;
+	}
+
+	if ( Prso_Gutenberg::is_gutenberg_request() ) {
+		return;
+	}
+
+	// Remove the REST API endpoint.
+	remove_action( 'rest_api_init', 'wp_oembed_register_route' );
+
+	// Turn off oEmbed auto discovery.
+	// Don't filter oEmbed results.
+	remove_filter( 'oembed_dataparse', 'wp_filter_oembed_result', 10 );
+
+	// Remove oEmbed discovery links.
+	remove_action( 'wp_head', 'wp_oembed_add_discovery_links' );
+
+	// Remove oEmbed-specific JavaScript from the front-end and back-end.
+	remove_action( 'wp_head', 'wp_oembed_add_host_js' );
+
+	// REMOVE WP EMOJI
+	remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
+	remove_action( 'wp_print_styles', 'print_emoji_styles' );
+
+	remove_action( 'admin_print_scripts', 'print_emoji_detection_script' );
+	remove_action( 'admin_print_styles', 'print_emoji_styles' );
+
+}
+
+/**
+* prso_multisite_body_classes
+*
+* @CALLED BY FILTER 'body_class'
+*
+* Body class filter will add site data to css class in multisite
+*
+* @access public
+* @author Ben Moody
+*/
+//add_filter( 'body_class', 'prso_multisite_body_classes' );
+function prso_multisite_body_classes( $classes ) {
+
+	$id        = get_current_blog_id();
+	$slug      = strtolower( str_replace( ' ', '-', trim( get_bloginfo( 'name' ) ) ) );
+	$classes[] = $slug;
+	$classes[] = 'site-id-' . $id;
+
+	return $classes;
+}
+
+/**
+* prso_excerpt_length
+*
+* @CALLED BY FILTER 'excerpt_length'
+*
+* @access public
+* @author Ben Moody
+*/
+add_filter( 'excerpt_length', 'prso_excerpt_length', 999 );
+function prso_excerpt_length( $length ) {
+	return 15;
+}
+
+/**
+* prso_excerpt_more
+*
+* @CALLED BY FILTER 'excerpt_more'
+*
+* @access public
+* @author Ben Moody
+*/
+add_filter( 'excerpt_more', 'prso_excerpt_more' );
+function prso_excerpt_more( $more ) {
+	return '...';
+}
+
+/**
+ * prso_pre_get_posts
+ *
+ * @CALLED BY /ACTION 'pre_get_posts'
+ *
+ * Set query vars
+ *
+ * @access public
+ * @author Ben Moody
+ */
+add_action( 'pre_get_posts', 'prso_pre_get_posts' );
+function prso_pre_get_posts( $query ) {
+
+	if ( is_admin() ) {
+		return;
+	}
+
+	if ( ! $query->is_main_query() ) {
+		return;
+	}
+
+	$query->set( 'orderby', 'date' );
+	$query->set( 'order', 'DESC' );
+	$query->set( 'post_per_page', get_option( 'posts_per_page' ) );
+	$query->set( 'post_status', 'publish' );
+
+}
+
+/**
+ * prso_is_gutenberg_editor_request
+ *
+ * Helper to return result of static method Prso_Gutenberg::is_gutenberg_request()
+ *
+ * @return bool
+ * @access public
+ * @author Ben Moody
+ */
+function prso_is_gutenberg_editor_request() {
+
+	if ( ! method_exists( 'Prso_Gutenberg', 'is_gutenberg_request' ) ) {
+		return false;
+	}
+
+	return Prso_Gutenberg::is_gutenberg_request();
+
+}
+
+// unregister all default WP Widgets
+add_action('widgets_init', 'prso_unregister_default_wp_widgets', 1);
+function prso_unregister_default_wp_widgets() {
+	unregister_widget('WP_Widget_Pages');
+	unregister_widget('WP_Widget_Calendar');
+	unregister_widget('WP_Widget_Archives');
+	unregister_widget('WP_Widget_Links');
+	unregister_widget('WP_Widget_Meta');
+	unregister_widget('WP_Widget_Search');
+	unregister_widget('WP_Widget_Text');
+	unregister_widget('WP_Widget_Categories');
+	unregister_widget('WP_Widget_Recent_Posts');
+	unregister_widget('WP_Widget_Recent_Comments');
+	unregister_widget('WP_Widget_RSS');
+	unregister_widget('WP_Widget_Tag_Cloud');
+	unregister_widget('WP_Nav_Menu_Widget');
+}
+
+// Comment Layout
+if( !function_exists('prso_theme_comments') ) {
+
+	function prso_theme_comments($comment, $args, $depth) {
+		$GLOBALS['comment'] = $comment; ?>
+	<li <?php comment_class(); ?>>
+		<article id="comment-<?php comment_ID(); ?>" class="clearfix">
+			<div class="comment-author vcard clearfix">
+				<div class="
+                        <?php
+				$authID = get_the_author_meta('ID');
+
+				if($authID == $comment->user_id)
+					echo "callout";
+				?>
+                    ">
+					<div class="grid-x">
+						<div class="avatar large-2 cell">
+							<?php echo get_avatar($comment,$size='75',$default='' ); ?>
+						</div>
+						<div class="large-10 cell">
+							<?php printf(__('<h4 class="span8">%s</h4>'), get_comment_author_link()) ?>
+							<time datetime="<?php echo comment_time('Y-m-j'); ?>"><a href="<?php echo htmlspecialchars( get_comment_link( $comment->comment_ID ) ) ?>"><?php comment_time('F jS, Y'); ?> </a></time>
+
+							<?php edit_comment_link(__('Edit'),'<span class="edit-comment">', '</span>'); ?>
+
+							<?php if ($comment->comment_approved == '0') : ?>
+								<div class="alert-box success">
+									<?php _e('Your comment is awaiting moderation.') ?>
+								</div>
+							<?php endif; ?>
+
+							<?php comment_text() ?>
+
+							<!-- removing reply link on each comment since we're not nesting them -->
+							<?php comment_reply_link(array_merge( $args, array('depth' => $depth, 'max_depth' => $args['max_depth']))) ?>
+						</div>
+					</div>
+				</div>
+			</div>
+		</article>
+		<!-- </li> is added by wordpress automatically -->
+		<?php
+	} // don't remove this bracket!
+
+}

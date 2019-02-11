@@ -1,0 +1,63 @@
+/* Dev Tools
+---------------------------------------------------------------------- */
+#breakpoints {
+	position: fixed;
+	bottom:0;
+	right: 0;
+	@include rem(padding, 10px);
+	background-color: black;
+	color: white;
+	z-index: 9999;
+}
+
+/** 404 **/
+body.error404 {
+	#post-not-found {
+		@include rem(padding,20px);
+		h1, p {
+			text-align: center;
+		}
+	}
+}
+
+/* Load More Button
+---------------------------------------------------------------------- */
+.load-more-container {
+	text-align: center;
+	clear: both;
+}
+
+button.load-more {
+	.fa {
+		@include rem(margin, 0 0 0 15px);
+	}
+}
+
+#results {
+
+	.loading-spinner {
+		position: relative;
+		@include rem(padding, 50px 0 550px 0);
+
+		i {
+			@include horizontal-align(absolute);
+			@include rem(font-size, 30px);
+		}
+
+	}
+
+	.no-results {
+		@include rem(padding, 50px 0 550px 0);
+	}
+
+}
+
+/* Media Captions
+---------------------------------------------------------------------- */
+figcaption {
+	display: block;
+	font-size: $global-font-size;
+	line-height: $paragraph-lineheight;
+	text-align: center;
+	@include rem(padding, 10px 15px);
+}

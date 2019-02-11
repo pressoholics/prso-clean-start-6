@@ -1,0 +1,11 @@
+/* Gutenberg core video and embed components
+---------------------------------------------------------------------- */
+.wp-block-video,
+.wp-block-embed {
+  @include responsive-embed(widescreen);
+
+  &.wp-embed-aspect-4-3 {
+    @include responsive-embed(default);
+  }
+
+}

@@ -1,0 +1,602 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: MultilingualPress\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2018-06-20T09:42:46+00:00\n"
+"PO-Revision-Date: \n"
+"Language: es_ES\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-KeywordsList: __;_e;_ex:1,2c;_n:1,2;_n_noop:1,2;_nx:1,2,4c;_nx_noop:1,2,3c;_x:1,2c;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.0.8\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+
+#. translators: %s is the site ID.
+#: framework/Admin/Metabox/Metaboxes.php:355
+msgid "Site %s is not accessible."
+msgstr "El sitio %s no es accesible."
+
+#. translators: 1 is the site ID, 2 the metabox title
+#: framework/Admin/Metabox/Metaboxes.php:415
+msgid "Site %1$d was not accessible when attempting to save metabox \"%2$s\"."
+msgstr "No se puede acceder al sitio %1$d al intentar guardar metabox “%2$s”."
+
+#: framework/Admin/Metabox/Metaboxes.php:420
+msgid "Metabox Not Saved"
+msgstr "Metabox no guardado"
+
+#. translators: %s is the language name, e.g. "English (US)"
+#: inc/api.php:133
+msgctxt "sites relationship"
+msgid "%s Site"
+msgstr "%s Sitio"
+
+#. translators: %d is the site ID
+#: inc/api.php:141
+msgctxt "sites relationship"
+msgid "Site %d"
+msgstr "Sitio %d"
+
+#: inc/utils.php:110
+msgid "Settings saved."
+msgstr "Ajustes guardados."
+
+#: modules/AltLanguageTitleInAdminBar/ServiceProvider.php:51
+msgid "Enable the Alternative Language Title field on each site: this allows you to create an alternative site title to show on the site admin bar."
+msgstr "Habilite el campo Título de idioma alternativo en cada sitio: esto le permite crear un título de sitio alternativo para mostrar en la barra de administración del sitio."
+
+#: modules/AltLanguageTitleInAdminBar/ServiceProvider.php:55
+msgid "Alternative Language Title"
+msgstr "Título del idioma alternativo"
+
+#: modules/Redirect/RedirectSiteSetting.php:65
+msgid "Enable automatic redirect"
+msgstr "Habilitar la redirección automática"
+
+#: modules/Redirect/RedirectSiteSetting.php:78
+#: modules/Redirect/RedirectUserSetting.php:87
+#: modules/Redirect/ServiceProvider.php:208
+#: modules/Redirect/ServiceProvider.php:285
+msgid "Redirect"
+msgstr "Redireccionar"
+
+#: modules/Redirect/RedirectUserSetting.php:70
+msgid "Do not redirect me to the best matching language version."
+msgstr "No redireccionarme a la mejor versión de idioma coincidente."
+
+#: modules/Redirect/ServiceProvider.php:204
+msgid "Enable the Redirect checkbox on each site: this allows you to enable/disable the automatic redirection feature according to the user browser language settings."
+msgstr "Active la casilla de verificación Redirect en cada sitio: esto le permite habilitar / deshabilitar la función de redirección automática de acuerdo con la configuración de idioma del navegador del usuario."
+
+#: modules/Trasher/ServiceProvider.php:87
+msgid "Enable the Thrash checkbox on post/page edit page: this allows you to send all the translations to trash when the source post/page is trashed."
+msgstr "Habilite la casilla de verificación Thrash en la página de edición de publicación / página: esto le permite enviar todas las traducciones a la papelera cuando la publicación / página de origen está en la papelera."
+
+#: modules/Trasher/ServiceProvider.php:91
+msgid "Trasher"
+msgstr "Enviar a la papelera"
+
+#: modules/Trasher/TrasherSettingView.php:81
+msgid "Send all the translations to trash when this post is trashed."
+msgstr "Envía todas las traducciones a la papelera cuando esta casilla está activada."
+
+#: multilingualpress/Core/Admin/AltLanguageTitleSiteSetting.php:54
+msgid "Enter the title you want to see in the admin bar instead of the default one (i.e. \"My English Site\")."
+msgstr "Ingrese el título que desea ver en la barra de administración en lugar del predeterminado (es decir, “Mi sitio en inglés”)."
+
+#: multilingualpress/Core/Admin/AltLanguageTitleSiteSetting.php:70
+msgid "Alternative language title"
+msgstr "Título de idioma alternativo"
+
+#: multilingualpress/Core/Admin/LanguageSiteSetting.php:45
+msgid "None"
+msgstr "Ninguno"
+
+#: multilingualpress/Core/Admin/LanguageSiteSetting.php:47
+msgid "Start typing language or country name to search"
+msgstr "Comience a escribir el idioma o el nombre del país para buscar"
+
+#: multilingualpress/Core/Admin/LanguageSiteSetting.php:56
+msgid "Current selection:"
+msgstr "Selección actual:"
+
+#: multilingualpress/Core/Admin/LanguageSiteSetting.php:63
+msgctxt "remove selected language"
+msgid "Remove"
+msgstr "Suprimir"
+
+#: multilingualpress/Core/Admin/LanguageSiteSetting.php:101
+#: multilingualpress/NavMenu/ServiceProvider.php:162
+msgid "Language"
+msgstr "Idioma"
+
+#: multilingualpress/Core/Admin/LanguageSiteSetting.php:116
+msgid "Choose language"
+msgstr "Elige idioma"
+
+#: multilingualpress/Core/Admin/LicenseSettingsTabView.php:69
+msgid "API Key Status"
+msgstr "Estado de la entrada"
+
+#: multilingualpress/Core/Admin/LicenseSettingsTabView.php:81
+msgid "API Key"
+msgstr "API Key"
+
+#: multilingualpress/Core/Admin/LicenseSettingsTabView.php:96
+msgid "API Email"
+msgstr "API Email"
+
+#: multilingualpress/Core/Admin/LicenseSettingsTabView.php:111
+msgid "Deactivate license"
+msgstr "Desactivar licencia"
+
+#: multilingualpress/Core/Admin/NewSiteSettings.php:71
+#: multilingualpress/Core/ServiceProvider.php:353
+#: multilingualpress/Core/ServiceProvider.php:542
+#: multilingualpress/Core/ServiceProvider.php:543
+#: multilingualpress/Core/ServiceProvider.php:614
+#: multilingualpress/Core/ServiceProvider.php:366
+#: multilingualpress/Core/ServiceProvider.php:557
+#: multilingualpress/Core/ServiceProvider.php:558
+#: multilingualpress/Core/ServiceProvider.php:631
+msgid "MultilingualPress"
+msgstr "MultilingualPress"
+
+#: multilingualpress/Core/Admin/PluginSettingsPageView.php:124
+msgid "Save Changes"
+msgstr "Guardar cambios"
+
+#: multilingualpress/Core/Admin/PostTypeSettingsTabView.php:105
+msgid "Post Type"
+msgstr "Post Type"
+
+#: multilingualpress/Core/Admin/PostTypeSettingsTabView.php:106
+msgid "Permalinks"
+msgstr "Enlaces permanentes"
+
+#: multilingualpress/Core/Admin/PostTypeSettingsTabView.php:154
+msgid "Use dynamic permalinks"
+msgstr "Usar enlaces permanentes dinámicos"
+
+#: multilingualpress/Core/Admin/RelationshipsSiteSetting.php:60
+msgid "There are no sites with an assigned language."
+msgstr "No hay sitios con un lenguaje asignado."
+
+#: multilingualpress/Core/Admin/RelationshipsSiteSetting.php:65
+msgid "Please assign a language to other sites to be able to connect them here."
+msgstr "Asigne un idioma a otros sitios para poder conectarlos aquí."
+
+#: multilingualpress/Core/Admin/RelationshipsSiteSetting.php:77
+msgid "You can connect this site only to sites with an assigned language. Other sites will not show up here."
+msgstr "Puede conectar este sitio solo a sitios con un idioma asignado. Otros sitios no aparecerán aquí."
+
+#: multilingualpress/Core/Admin/RelationshipsSiteSetting.php:95
+#: multilingualpress/Core/ServiceProvider.php:663
+#: multilingualpress/Core/ServiceProvider.php:680
+msgid "Relationships"
+msgstr "Relaciones"
+
+#: multilingualpress/Core/Admin/RelationshipsSiteSetting.php:110
+#: multilingualpress/NavMenu/LanguagesMetaboxView.php:120
+msgid "Select All"
+msgstr "Seleccionar todo"
+
+#: multilingualpress/Core/Admin/RelationshipsSiteSetting.php:114
+msgid "Deselect All"
+msgstr "Deseleccionar todo"
+
+#: multilingualpress/Core/Admin/SiteSettingsTabView.php:74
+msgid "Invalid site ID."
+msgstr "ID de sitio no válido."
+
+#: multilingualpress/Core/Admin/SiteSettingsTabView.php:79
+msgid "The requested site does not exist."
+msgstr "El sitio solicitado no existe."
+
+#: multilingualpress/Core/Admin/SiteSettingsTabView.php:100
+msgid "Site URL"
+msgstr "URL del sitio"
+
+#. translators: %s: site name
+#: multilingualpress/Core/Admin/SiteSettingsTabView.php:121
+msgid "Edit Site: %s"
+msgstr "Editar sitio: %s"
+
+#: multilingualpress/Core/Admin/SiteSettingsTabView.php:127
+msgid "Visit"
+msgstr "Visitar"
+
+#: multilingualpress/Core/Admin/SiteSettingsTabView.php:131
+msgid "Dashboard"
+msgstr "Escritorio"
+
+#: multilingualpress/Core/Admin/TaxonomySettingsTabView.php:105
+msgid "Taxonomy"
+msgstr "Taxonomía"
+
+#: multilingualpress/Core/License/Activator.php:104
+#: multilingualpress/Core/License/Activator.php:103
+msgid "Unknown Error."
+msgstr "Error desconocido."
+
+#: multilingualpress/Core/ServiceProvider.php:245
+#: multilingualpress/Core/ServiceProvider.php:255
+msgid "Modules"
+msgstr "Módulos"
+
+#: multilingualpress/Core/ServiceProvider.php:256
+#: multilingualpress/Core/ServiceProvider.php:266
+msgid "Translatable Post Types"
+msgstr "Tipos de entrada traducibles"
+
+#: multilingualpress/Core/ServiceProvider.php:267
+#: multilingualpress/Core/ServiceProvider.php:277
+msgid "Translatable Taxonomies"
+msgstr "Taxonomías traducibles"
+
+#: multilingualpress/Core/ServiceProvider.php:278
+#: multilingualpress/Core/ServiceProvider.php:290
+msgid "License"
+msgstr "Licencia"
+
+#: multilingualpress/Core/ServiceProvider.php:560
+#: multilingualpress/Core/ServiceProvider.php:575
+msgid "Settings"
+msgstr "Ajustes"
+
+#: multilingualpress/Core/ServiceProvider.php:650
+#: multilingualpress/Core/ServiceProvider.php:667
+msgid "Site Language"
+msgstr "Idioma del sitio"
+
+#: multilingualpress/Core/ServiceProvider.php:652
+#: multilingualpress/Core/ServiceProvider.php:671
+#: multilingualpress/Core/ServiceProvider.php:669
+#: multilingualpress/Core/ServiceProvider.php:688
+msgid "none"
+msgstr "ninguno"
+
+#. translators: %s: plugin name.
+#: multilingualpress/Installation/PluginDeactivator.php:106
+msgid "The plugin %s has been deactivated."
+msgstr "El plugin %s ha sido desactivado."
+
+#: multilingualpress/Installation/SiteRelationsChecker.php:58
+msgid "You didn't set up any site relationships. You have to set up these first to use MultilingualPress."
+msgstr "No configuró ninguna relación entre sitios. Tienes que configurar estos primero para usar MultilingualPress."
+
+#: multilingualpress/Installation/SiteRelationsChecker.php:62
+msgid "Please go to Network Admin > Sites > and choose a site to edit. Then go to the tab \"MultilingualPress\" and set up the relationships."
+msgstr "Vaya a Administrador de red > Sitios > y elija un sitio para editar. Luego vaya a la pestaña “MultilingualPress” y configure las relaciones."
+
+#: multilingualpress/Installation/SystemChecker.php:166
+msgid "It seems that an old version of MultilingualPress is installed in this website."
+msgstr "Parece que una versión anterior de MultilingualPress está instalada en este sitio web."
+
+#. translators: 1: version number, 2: plugin name
+#: multilingualpress/Installation/SystemChecker.php:172
+msgid "Version %1$s of %2$s is not compatible with that old version."
+msgstr "La versión %1$s de %2$s no es compatible con la versión anterior."
+
+#. translators: 1: required PHP version, 2: current PHP version
+#: multilingualpress/Installation/SystemChecker.php:199
+msgid "This plugin requires PHP version %1$s, your version %2$s is too old. Please upgrade."
+msgstr "Este plugin requiere la versión PHP %1$s, su versión %2$s es demasiado antigua. Por favor actualice."
+
+#. translators: 1: required WordPress version, 2: current WordPress version
+#: multilingualpress/Installation/SystemChecker.php:221
+msgid "This plugin requires WordPress version %1$s, your version %2$s is too old. Please upgrade."
+msgstr "Este plugin requiere la versión de WordPress %1$s, su versión %2$s es demasiado antigua. Por favor actualice."
+
+#: multilingualpress/Installation/SystemChecker.php:238
+msgid "This plugin needs to run in a multisite."
+msgstr "Este plugin necesita ejecutarse en multisitio."
+
+#: multilingualpress/Installation/SystemChecker.php:246
+msgid "Please convert this WordPress installation to multisite."
+msgstr "Convierta esta instalación de WordPress a multisitio."
+
+#: multilingualpress/Installation/SystemChecker.php:273
+msgid "This plugin must be activated for the network."
+msgstr "Este plugin debe estar activado para toda la red."
+
+#: multilingualpress/Installation/SystemChecker.php:281
+msgid "Please use the network plugin administration."
+msgstr "Utilice la administración del plugin de red."
+
+#: multilingualpress/NavMenu/LanguagesMetaboxView.php:59
+msgid "No items."
+msgstr "No hay artículos."
+
+#: multilingualpress/NavMenu/LanguagesMetaboxView.php:126
+msgid "Add to Menu"
+msgstr "Agregar al Menú"
+
+#: multilingualpress/NavMenu/ServiceProvider.php:142
+msgid "Languages"
+msgstr "Idiomas"
+
+#: multilingualpress/SiteDuplication/ActivatePluginsSetting.php:41
+msgid "Activate all plugins that are active on the source site"
+msgstr "Activar todos los plugin que están activos en el sitio de origen"
+
+#: multilingualpress/SiteDuplication/ActivatePluginsSetting.php:57
+msgid "Plugins"
+msgstr "Plugins"
+
+#: multilingualpress/SiteDuplication/BasedOnSiteSetting.php:73
+msgid "Based on site"
+msgstr "Basado en el sitio"
+
+#: multilingualpress/SiteDuplication/BasedOnSiteSetting.php:85
+msgid "Choose site"
+msgstr "Elige el sitio"
+
+#: multilingualpress/SiteDuplication/SearchEngineVisibilitySetting.php:50
+msgid "Discourage search engines from indexing this site"
+msgstr "No permita a los motores de búsqueda indexar este sitio"
+
+#: multilingualpress/SiteDuplication/SearchEngineVisibilitySetting.php:58
+msgid "It is up to search engines to honor this request."
+msgstr "Depende de los motores de búsqueda cumplir con esta solicitud."
+
+#: multilingualpress/SiteDuplication/SearchEngineVisibilitySetting.php:74
+msgid "Search Engine Visibility"
+msgstr "Visibilidad del motor de búsqueda"
+
+#: multilingualpress/TranslationUi/Post/Field/Base.php:63
+msgid "If empty will be auto-generated"
+msgstr "Si está vacío, se generará automáticamente"
+
+#: multilingualpress/TranslationUi/Post/Field/Base.php:80
+msgid "Post Title:"
+msgstr "Título de la entrada:"
+
+#: multilingualpress/TranslationUi/Post/Field/Base.php:81
+msgid "New Post Title:"
+msgstr "Nuevo título de la entrada:"
+
+#: multilingualpress/TranslationUi/Post/Field/Base.php:85
+msgid "Post Slug:"
+msgstr "Slug de la entrada:"
+
+#: multilingualpress/TranslationUi/Post/Field/Base.php:86
+msgid "New Post Slug:"
+msgstr "Nuevo slug de la entrada:"
+
+#: multilingualpress/TranslationUi/Post/Field/CopyContent.php:48
+msgid "Copy source content"
+msgstr "Copie el contenido fuente"
+
+#: multilingualpress/TranslationUi/Post/Field/CopyContent.php:58
+msgid "Overwrites content on translated post with the content of source post."
+msgstr "Sobrescribe el contenido de la publicación traducida con el contenido de la publicación de origen."
+
+#: multilingualpress/TranslationUi/Post/Field/CopyFeaturedImage.php:48
+msgid "Copy featured image"
+msgstr "Copia de imagen destacada"
+
+#: multilingualpress/TranslationUi/Post/Field/CopyFeaturedImage.php:59
+msgid "Overwrites featured image on translated post with the featured image of source post."
+msgstr "Sobrescribe la imagen destacada en la publicación traducida con la imagen mostrada de la publicación de origen."
+
+#: multilingualpress/TranslationUi/Post/Field/CopyTaxonomies.php:47
+msgid "Synchronize Taxonomies"
+msgstr "Sincronizar taxonomías"
+
+#: multilingualpress/TranslationUi/Post/Field/CopyTaxonomies.php:57
+msgid "Overwrites the target post taxonomy terms with the translation of terms assigned to source post."
+msgstr "Sobrescribe los términos de la taxonomía posterior a la publicación con la traducción de los términos asignados a la publicación de origen."
+
+#: multilingualpress/TranslationUi/Post/Field/EditLink.php:34
+msgctxt "edit post link translation meta box"
+msgid "Edit Link"
+msgstr "Editar enlace"
+
+#: multilingualpress/TranslationUi/Post/Field/EditLink.php:43
+msgctxt "edit post link translation meta box"
+msgid "(open in current page)"
+msgstr "(abrir en la página actual)"
+
+#: multilingualpress/TranslationUi/Post/Field/Excerpt.php:31
+msgid "New Post Excerpt:"
+msgstr "Nuevo extracto de la entrada:"
+
+#: multilingualpress/TranslationUi/Post/Field/Excerpt.php:34
+msgid "Post Excerpt:"
+msgstr "Extracto de la entrada:"
+
+#: multilingualpress/TranslationUi/Post/Field/Relation.php:56
+#: multilingualpress/TranslationUi/Term/Field/Relation.php:57
+msgid "Currently not connected."
+msgstr "Actualmente no conectado."
+
+#. translators: 1 is the post title, 2 the post status, 3 the post date
+#: multilingualpress/TranslationUi/Post/Field/Relation.php:60
+msgid "Currently connected with \"%1$s\" (%2$s - %3$s)"
+msgstr "Actualmente conectado con “%1$s” (%2$s - %3$s)"
+
+#. translators: 1 is the post type, 2 the language name
+#: multilingualpress/TranslationUi/Post/Field/Relation.php:136
+msgid "Create a new %1$s, and use it as translation in %2$s."
+msgstr "Cree un nuevo %1$s, y úselo como traducción en %2$s."
+
+#. translators: 1 is the post type, 2 the language name
+#: multilingualpress/TranslationUi/Post/Field/Relation.php:175
+msgid "Select an existing %1$s to be used as translation in %2$s."
+msgstr "Seleccione un %1$s existente para usar como traducción en %2$s."
+
+#. translators: %s is the language name
+#: multilingualpress/TranslationUi/Post/Field/Relation.php:205
+#: multilingualpress/TranslationUi/Term/Field/Relation.php:178
+msgid "Remove connection (don't translate in %s)."
+msgstr "Eliminar la conexión (no traducir en %s)."
+
+#. translators: %s is the post type
+#: multilingualpress/TranslationUi/Post/Field/Relation.php:236
+msgid "Do not change connected %s."
+msgstr "No cambie %s conectado."
+
+#: multilingualpress/TranslationUi/Post/Field/Relation.php:240
+#: multilingualpress/TranslationUi/Term/Field/Relation.php:203
+msgid "Keep not connected."
+msgstr "No mantener conectado."
+
+#: multilingualpress/TranslationUi/Post/Field/Relation.php:266
+#: multilingualpress/TranslationUi/Term/Field/Relation.php:229
+msgid "Start typing to search..."
+msgstr "Comience a escribir para buscar …"
+
+#: multilingualpress/TranslationUi/Post/Field/Relation.php:277
+#: multilingualpress/TranslationUi/Term/Field/Relation.php:240
+msgid "Search"
+msgstr "Buscar"
+
+#: multilingualpress/TranslationUi/Post/Field/Relation.php:299
+msgid "No posts found matching search."
+msgstr "No se encontraron publicaciones que coincidan con la búsqueda."
+
+#: multilingualpress/TranslationUi/Post/Field/Relation.php:324
+#: multilingualpress/TranslationUi/Term/Field/Relation.php:287
+msgid "Update now"
+msgstr "Actualizar ahora"
+
+#: multilingualpress/TranslationUi/Post/Field/Status.php:79
+msgid "New Post Status:"
+msgstr "Nuevo estado de publicación:"
+
+#: multilingualpress/TranslationUi/Post/Field/Status.php:82
+msgid "Post Status:"
+msgstr "Estado de la entrada:"
+
+#. translators: %s is site name including language
+#: multilingualpress/TranslationUi/Post/Metabox.php:157
+#: multilingualpress/TranslationUi/Term/Metabox.php:157
+msgid "Translation for \"%s\""
+msgstr "Traducción para “%s”"
+
+#. translators: %s is the language name
+#: multilingualpress/TranslationUi/Post/MetaboxAction.php:227
+msgid "Error updating translation for %s: error updating post in database."
+msgstr "Error al actualizar la traducción de %s: error al actualizar la publicación en la base de datos."
+
+#: multilingualpress/TranslationUi/Post/MetaboxFields.php:100
+msgctxt "translation post metabox"
+msgid "Relationship"
+msgstr "Relación"
+
+#: multilingualpress/TranslationUi/Post/MetaboxFields.php:106
+msgctxt "translation post metabox"
+msgid "Title and Content"
+msgstr "Título y Contenido"
+
+#: multilingualpress/TranslationUi/Post/MetaboxFields.php:107
+msgctxt "translation post metabox"
+msgid "Title"
+msgstr "Título"
+
+#: multilingualpress/TranslationUi/Post/MetaboxFields.php:119
+msgctxt "translation post metabox"
+msgid "Excerpt"
+msgstr "Extracto"
+
+#: multilingualpress/TranslationUi/Post/MetaboxFields.php:126
+msgctxt "translation post metabox"
+msgid "Advanced"
+msgstr "Avanzado"
+
+#: multilingualpress/TranslationUi/Post/MetaboxFields.php:132
+msgctxt "translation post metabox"
+msgid "Taxonomies"
+msgstr "Taxonomías"
+
+#: multilingualpress/TranslationUi/Post/MetaboxView.php:152
+msgid "The currently connected translation post is trashed."
+msgstr "La publicación de traducción actualmente conectada está en la papelera."
+
+#: multilingualpress/TranslationUi/Post/MetaboxView.php:157
+msgid "Edit the relationship or no further editing will be possible."
+msgstr "Edite la relación o no será posible editarla más."
+
+#: multilingualpress/TranslationUi/Term/Field/Base.php:73
+msgid "Term Name:"
+msgstr "Nombre del término:"
+
+#: multilingualpress/TranslationUi/Term/Field/Base.php:74
+msgid "New Term Name:"
+msgstr "Nuevo nombre de término:"
+
+#: multilingualpress/TranslationUi/Term/Field/Base.php:78
+msgid "Term Slug:"
+msgstr "Slug del término:"
+
+#: multilingualpress/TranslationUi/Term/Field/Base.php:79
+msgid "New Term Slug:"
+msgstr "Nuevo slug de término:"
+
+#: multilingualpress/TranslationUi/Term/Field/Description.php:31
+msgid "New Term Description:"
+msgstr "Nueva descripción del término:"
+
+#: multilingualpress/TranslationUi/Term/Field/Description.php:34
+msgid "Term Description:"
+msgstr "Descripción del término:"
+
+#. translators: %s is the parent item label, e.g. "Parent Category:"
+#: multilingualpress/TranslationUi/Term/Field/ParentTerm.php:51
+msgctxt "new parent item"
+msgid "New %s"
+msgstr "Nuevo %s"
+
+#: multilingualpress/TranslationUi/Term/Field/ParentTerm.php:75
+msgid "-- No parent --"
+msgstr "- Sin padre -"
+
+#: multilingualpress/TranslationUi/Term/Field/ParentTerm.php:76
+msgid "Synchronize with source term"
+msgstr "Sincronizar con el término fuente"
+
+#. translators: %s is the term name
+#: multilingualpress/TranslationUi/Term/Field/Relation.php:60
+msgid "Currently connected with \"%s\""
+msgstr "Actualmente conectado con “%s”"
+
+#. translators: %s is the language name
+#: multilingualpress/TranslationUi/Term/Field/Relation.php:118
+msgid "Create a new term, and use it as translation in %s."
+msgstr "Cree un nuevo término y úselo como traducción en %s."
+
+#. translators: %s is the language name
+#: multilingualpress/TranslationUi/Term/Field/Relation.php:148
+msgid "Select an existing term to be used as translation in %s."
+msgstr "Seleccione un término existente para usar como traducción en %s."
+
+#: multilingualpress/TranslationUi/Term/Field/Relation.php:202
+msgid "Do not change connected term."
+msgstr "No cambie el término conectado."
+
+#: multilingualpress/TranslationUi/Term/Field/Relation.php:262
+msgid "No terms found matching search."
+msgstr "No se encontraron términos que coincidan con la búsqueda."
+
+#. translators: %s is the language name
+#: multilingualpress/TranslationUi/Term/MetaboxAction.php:167
+msgid "Error updating term translation for %s: error updating term in database."
+msgstr "Error al actualizar la traducción de términos para% s: término de actualización de errores en la base de datos."
+
+#: multilingualpress/TranslationUi/Term/MetaboxFields.php:40
+msgctxt "translation term metabox"
+msgid "Relationship"
+msgstr "Relación"
+
+#: multilingualpress/TranslationUi/Term/MetaboxFields.php:45
+msgctxt "translation term metabox"
+msgid "Term Data"
+msgstr "Datos de términos"

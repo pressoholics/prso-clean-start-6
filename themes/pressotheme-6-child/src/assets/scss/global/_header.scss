@@ -1,0 +1,30 @@
+/* Mobile Navbar
+---------------------------------------------------------------------- */
+nav#site-mobile-navbar {
+  @include hide-for(medium);
+}
+
+/* Main Header
+---------------------------------------------------------------------- */
+section#header-container {
+  @include show-for(medium);
+
+  header#site-header-content {
+    @include xy-grid-container;
+  }
+
+}
+
+.no-js {
+  @include breakpoint(small only) {
+    .top-bar {
+      display: none;
+    }
+  }
+
+  @include breakpoint(medium) {
+    .title-bar {
+      display: none;
+    }
+  }
+}

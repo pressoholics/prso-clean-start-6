@@ -1,0 +1,82 @@
+/* Gutenberg core gallery component
+---------------------------------------------------------------------- */
+//Set available column sizes from Gutenberg core component options
+$gut-gallery-sizes: (2 3 4 5 6);
+
+//Map responsive grid size for small
+$gut-gallery-responsive-small: (
+        2: 1,
+        3: 1,
+        4: 1,
+        5: 1,
+        6: 1,
+);
+
+//Map responsive grid size for medium
+$gut-gallery-responsive-medium: (
+        2: 2,
+        3: 3,
+        4: 4,
+        5: 4,
+        6: 3,
+);
+
+ul.wp-block-gallery {
+  @include xy-grid;
+  list-style: none;
+
+  //Align outer edges of grid with the surrounding content container
+  @include align-grid-with-content(small);
+  @include breakpoint(medium up) {
+    @include align-grid-with-content(medium);
+  }
+
+  @each $size in $gut-columns-sizes {
+
+    &.columns-#{$size} {
+      @include xy-grid-layout( map-get($gut-columns-responsive-small, $size), '.blocks-gallery-item', true, $grid-margin-gutters, padding, right bottom left );
+
+      @include breakpoint(medium up) {
+        @include xy-grid-layout( map-get($gut-columns-responsive-medium, $size), '.blocks-gallery-item', true, $grid-margin-gutters, padding, right bottom left );
+      }
+
+      @include breakpoint(large up) {
+        @include xy-grid-layout($size, '.blocks-gallery-item', true, $grid-margin-gutters, padding, right bottom left);
+      }
+
+    }
+
+  }
+
+  /* Media Captions
+  ---------------------------------------------------------------------- */
+  figcaption {
+    @include rem(font-size, 12px);
+    line-height: 1.3;
+    @include rem(padding, 5px 10px);
+  }
+
+}
+
+/* Jetpack gallery carousel
+---------------------------------------------------------------------- */
+/* Center the caption. */
+.jp-carousel-info h2 {
+  text-align: center !important;
+}
+
+/* Hide comment form header. */
+.jp-carousel-left-column-wrapper {
+  //display: none !important;
+}
+
+/* Center the metabox. */
+.jp-carousel-image-meta {
+  float: none !important;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.jp-carousel-buttons {
+  display: none !important;
+}

@@ -1,0 +1,30 @@
+.onboarding-message {
+  width: 100%;
+  display: inline-block;
+  margin-bottom: 15px;
+}
+.onboarding-message .buttons {
+  width: 100%;
+  display: inline-block;
+}
+.notice-multilingualpress {
+  border-left-color: #9dc55d;
+  padding-top: 10px;
+  padding-bottom: 15px;
+}
+.notice-multilingualpress .buttons .button-primary {
+  background: #9dc55d;
+  border-color: #b4d283 #85b03f #85b03f;
+  box-shadow: 0 1px 0 #688a32;
+  color: #fff;
+  text-decoration: none;
+  text-shadow: 0 -1px 1px #688a32, 1px 0 1px #688a32, 0 1px 1px #688a32, -1px 0 1px #688a32;
+}
+.notice-multilingualpress .buttons .button-primary:hover {
+  background: #85b03f;
+  border-color: #9dc55d #688a32 #688a32;
+  box-shadow: 0 1px 0 #4c6524;
+  color: #fff;
+  text-decoration: none;
+  text-shadow: 0 -1px 1px #4c6524, 1px 0 1px #4c6524, 0 1px 1px #4c6524, -1px 0 1px #4c6524;
+}

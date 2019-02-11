@@ -1,0 +1,52 @@
+/* Gutenberg core media & text component
+---------------------------------------------------------------------- */
+.wp-block-media-text {
+  @include xy-grid;
+
+  .wp-block-media-text__media {
+    @include xy-cell(6);
+  }
+
+  .wp-block-media-text__content {
+    @include xy-cell(6);
+  }
+
+  &.is-stacked-on-mobile {
+    @include breakpoint(small only) {
+      .wp-block-media-text__media {
+        @include xy-cell(12);
+      }
+
+      .wp-block-media-text__content {
+        @include xy-cell(12);
+      }
+    }
+  }
+
+  &.has-media-on-the-right {
+
+    @include breakpoint(medium up) {
+      .wp-block-media-text__content {
+        @include flex-order(1);
+      }
+
+      .wp-block-media-text__media {
+        @include flex-order(2);
+      }
+    }
+
+  }
+
+  &.has-media-on-the-right:not(.is-stacked-on-mobile) {
+
+    .wp-block-media-text__content {
+      @include flex-order(1);
+    }
+
+    .wp-block-media-text__media {
+      @include flex-order(2);
+    }
+
+  }
+
+}

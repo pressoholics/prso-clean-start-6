@@ -1,0 +1,23 @@
+/* Gutenberg core button component
+---------------------------------------------------------------------- */
+.wp-block-button {
+
+  a.wp-block-button__link {
+    @include button();
+  }
+
+  &.is-style-outline {
+
+    a.wp-block-button__link {
+      @include button(
+        false,
+        $button-background,
+        $button-background-hover,
+        $button-color,
+        hollow
+      );
+    }
+
+  }
+
+}

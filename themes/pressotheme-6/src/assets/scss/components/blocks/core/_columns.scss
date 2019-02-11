@@ -1,0 +1,50 @@
+/* Gutenberg core columns component
+---------------------------------------------------------------------- */
+//Set available column sizes from Gutenberg core component options
+$gut-columns-sizes: (2 3 4 5 6);
+
+//Map responsive grid size for small
+$gut-columns-responsive-small: (
+        2: 1,
+        3: 1,
+        4: 1,
+        5: 1,
+        6: 1,
+);
+
+//Map responsive grid size for medium
+$gut-columns-responsive-medium: (
+  2: 2,
+  3: 3,
+  4: 4,
+  5: 4,
+  6: 3,
+);
+
+.wp-block-columns {
+  @include xy-grid;
+
+  //Align outer edges of grid with the surrounding content container
+  @include align-grid-with-content(small);
+  @include breakpoint(medium up) {
+    @include align-grid-with-content(medium);
+  }
+
+  @each $size in $gut-columns-sizes {
+
+    &.has-#{$size}-columns {
+      @include xy-grid-layout( map-get($gut-columns-responsive-small, $size), '.wp-block-column', true, $grid-margin-gutters, padding );
+
+      @include breakpoint(medium up) {
+        @include xy-grid-layout( map-get($gut-columns-responsive-medium, $size), '.wp-block-column', true, $grid-margin-gutters, padding );
+      }
+
+      @include breakpoint(large up) {
+        @include xy-grid-layout($size, '.wp-block-column', true, $grid-margin-gutters, padding);
+      }
+
+    }
+
+  }
+
+}

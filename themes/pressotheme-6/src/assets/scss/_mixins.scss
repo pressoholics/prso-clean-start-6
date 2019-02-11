@@ -1,0 +1,143 @@
+/* Custom Sass Mixins */
+
+// Helper to strip units from a var -- (24px == 24)
+@function strip-units($number) {
+  @return $number / ($number * 0 + 1);
+}
+
+/* Convert PX units to REMs and add px fallback of property.
+Ex: @include rem(line-height, 25px);
+*/
+@mixin rem($property, $pxval) {
+  #{$property}: #{$pxval};
+  #{$property}: rem-calc($pxval);
+}
+
+/* Helper to add propoerty across browser vendors */
+@mixin vendorize($property, $value) {
+  -webkit-#{$property}: $value;
+  -moz-#{$property}: $value;
+  -ms-#{$property}: $value;
+  -o-#{$property}: $value;
+  #{$property}: $value;
+}
+
+/* Helper to style all Link Hover/Active/Focus */
+@mixin hoverActiveFocus($property, $value) {
+  &:hover, &:active, &:focus {
+    #{$property}: $value;
+  }
+}
+
+/* Helper to return css required for left overlap browser bars */
+@mixin leftBrowserBar() {
+  bottom: 0;
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 9999px;
+  right: 100%;
+}
+
+/* Default sprite locations -- !!HEY!! Uncomment me when you are ready to use some sprites :) */
+//$sprites 	: sprite-map("sprites_72/*.png");
+
+/* E.G. @include get-sprite( "nav-tab", $sprites ); */
+@mixin get-sprite($name, $sprites) {
+  background-image: sprite-url($sprites);
+  background-position: sprite-position($sprites, $name);
+  background-repeat: no-repeat;
+}
+
+@function relativeCalc( $value ) {
+  @return $value / strip-units($base-font-size)
+}
+
+@mixin cover-background($img-uri, $background-top:"center", $background-left:"center", $background-attachment:"local") {
+  background: url($img-uri) no-repeat unquote($background-top) unquote($background-left) unquote($background-attachment);
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+@mixin cover-background-no-url($background-top:"center", $background-left:"center", $background-attachment:"inherit") {
+  background-repeat: no-repeat;
+  background-position: unquote($background-top) unquote($background-left);
+  background-attachment: unquote($background-attachment);
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+@mixin cover-video() {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+@mixin vertical-align($position: relative) {
+  position: $position;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+@mixin horizontal-align($position: relative) {
+  position: $position;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  transform: translateX(-50%);
+}
+
+@mixin center-align($position: relative) {
+  position: $position;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+@mixin font-awesome($icon) {
+  content: $icon;
+  font-family: FontAwesome;
+  font-weight: normal;
+  font-style: normal;
+  display: inline-block;
+  text-decoration: inherit;
+  line-height: 1;
+}
+
+/* Transition Animation */
+@mixin ease-in-out( $time : 0.2s ) {
+  -webkit-transition: all $time ease-in-out;
+  -moz-transition: all $time ease-in-out;
+  -o-transition: all $time ease-in-out;
+  transition: all $time ease-in-out;
+}
+
+//Function to return the gutter based on breakpoint
+@function get-gutter-for-breakpoint( $breakpoint: medium ) {
+
+  // Get the gutter for the given breakpoint/value.
+  $gutter: -zf-get-bp-val($grid-margin-gutters, $breakpoint);
+
+  @return $gutter;
+}
+
+//Helper to align the outer edges of a grid with the content container
+@mixin align-grid-with-content( $breakpoint: small ) {
+
+  // Get the gutter for the given breakpoint/value.
+  $gutter: get-gutter-for-breakpoint( $breakpoint ) / 2;
+
+  margin-left: -#{rem-calc($gutter)};
+  margin-right: -#{rem-calc($gutter)};
+}
