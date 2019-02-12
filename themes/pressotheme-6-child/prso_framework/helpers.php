@@ -1,5 +1,58 @@
 <?php
 /**
+ * prso_replace_dev_with_prodcution_image_urls
+ *
+ * @CALLED BY ACTION 'init'
+ *
+ * Replace dev image urls with production if WP_SITEURL and PROD_URL are defined in wp-config
+ *
+ * @access public
+ * @author Ben Moody
+ */
+//add_action('init', 'prso_replace_dev_with_prodcution_image_urls' );
+function prso_replace_dev_with_prodcution_image_urls() {
+
+	if ( defined('WP_SITEURL') && defined('PROD_URL') ) {
+
+		if ( WP_SITEURL != PROD_URL ){
+
+			add_filter('wp_get_attachment_url', 'prso_wp_get_production_attachment_url', 10, 1 );
+			add_filter('wp_get_attachment_image_attributes', 'prso_wp_get_production_attachment_url', 10, 1 );
+
+		}
+
+	}
+
+}
+
+/**
+ * prso_wp_get_production_attachment_url
+ *
+ * @CALLED BY FILTER 'wp_get_attachment_url'
+ * @CALLED BY FILTER 'wp_get_attachment_image_attributes'
+ *
+ * Filters src and srcset and replaces dev urls with production
+ *
+ * @access public
+ * @author Ben Moody
+ */
+function prso_wp_get_production_attachment_url( $url ) {
+
+	if( is_array($url) && isset($url['src'], $url['srcset']) ) {
+
+		$url['src'] = str_replace( WP_SITEURL, PROD_URL, $url['src'] );
+		$url['srcset'] = str_replace( WP_SITEURL, PROD_URL, $url['srcset'] );
+
+	} else {
+
+		$url = str_replace( WP_SITEURL, PROD_URL, $url );
+
+	}
+
+	return $url;
+}
+
+/**
  * prso_set_cookie
  *
  * Helper to set a secure, httponly, samesite=strict cookie
