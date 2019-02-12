@@ -96,12 +96,7 @@
  		$scan	= null; //Cache result of dir scan
  		
  		$result = array(
-		    'admin',
-		    //'flash',
-		    //'mailchimp',
 		    'minify',
-		    'validate',
-		    'wpquery',
 		);
  		
  		return $result;

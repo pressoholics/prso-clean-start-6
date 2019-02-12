@@ -10,6 +10,14 @@ export default class RenderFilters extends React.Component {
         filtersConfig: propTypes.object.isRequired,
     };
 
+    /**
+    * render
+    *
+    * Loop the filter config object and pass config props to RenderSingleFilter component
+    *
+    * @access public
+    * @author Ben Moody
+    */
     render() {
 
         const {filtersConfig = {}} = this.props;

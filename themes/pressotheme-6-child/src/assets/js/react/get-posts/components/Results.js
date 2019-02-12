@@ -8,16 +8,28 @@ import RenderResultsGrid from "./RenderResultsGrid";
 
 export class Results extends React.Component {
 
+    /**
+     * render
+     *
+     * If the app is currently making an async REST api request show the loading spinner.
+     * If not, render the results via RenderResultsGrid component
+     *
+     * @param type name
+     * @var type name
+     * @return type name
+     * @access public
+     * @author Ben Moody
+     */
     render() {
         const {madeRequest} = this.props.requestStatus;
         const {page} = this.props.requestParams;
 
-        if( madeRequest ) {
+        if (madeRequest) {
 
             return (
                 <React.Fragment>
                     {page > 1 &&
-                    <RenderResultsGrid />
+                    <RenderResultsGrid/>
                     }
 
                     <div className='loading-spinner'>
@@ -29,7 +41,7 @@ export class Results extends React.Component {
         } else {
 
             return (
-                <RenderResultsGrid />
+                <RenderResultsGrid/>
             );
 
         }

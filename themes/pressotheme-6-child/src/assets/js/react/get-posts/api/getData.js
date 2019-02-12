@@ -112,9 +112,13 @@ export const setupUrlQuery = ( requestParams ) => {
 
                 requestParams.per_page = Number(value);
 
+            } else if (filter === 's') {
+
+                requestParams.search = value;
+
             } else if (filter === 'search') {
 
-                requestParams.searchQuery = value;
+                requestParams.search = value;
 
             } else {
 

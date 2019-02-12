@@ -11,6 +11,14 @@ export default class RenderSingleFilter extends React.Component {
         filterConfig: propTypes.object.isRequired,
     };
 
+    /**
+    * render
+    *
+    * Detect filter type and pass config props to correct Component to render the filter
+    *
+    * @access public
+    * @author Ben Moody
+    */
     render() {
 
         const {type = 'select', defaultValue = 'Select Option', terms = []} = this.props.filterConfig;

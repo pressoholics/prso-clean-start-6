@@ -1,4 +1,4 @@
-<div class="large-8 cell clearfix" role="main">
+<div class="small-12 medium-8 cell" role="main">
 
 	<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 

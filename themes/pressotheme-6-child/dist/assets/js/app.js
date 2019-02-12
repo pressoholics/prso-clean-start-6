@@ -52415,8 +52415,10 @@ var setupUrlQuery = function setupUrlQuery(requestParams) {
         requestParams.page = Number(value);
       } else if (filter === 'per_page') {
         requestParams.per_page = Number(value);
+      } else if (filter === 's') {
+        requestParams.search = value;
       } else if (filter === 'search') {
-        requestParams.searchQuery = value;
+        requestParams.search = value;
       } else {
         requestParams.selectedFilters[filter] = Number(value);
       }
@@ -52521,6 +52523,7 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
+      //Do we have at least a filter or search config from local object?
       if (this.shouldRenderFilters()) {
         return react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
           id: "filters-container"
@@ -52723,6 +52726,15 @@ function (_React$Component) {
 
   _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default()(RenderFilters, [{
     key: "render",
+
+    /**
+    * render
+    *
+    * Loop the filter config object and pass config props to RenderSingleFilter component
+    *
+    * @access public
+    * @author Ben Moody
+    */
     value: function render() {
       var _this$props$filtersCo = this.props.filtersConfig,
           filtersConfig = _this$props$filtersCo === void 0 ? {} : _this$props$filtersCo;
@@ -52815,6 +52827,16 @@ function (_React$Component) {
 
   _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default()(RenderResultsGrid, [{
     key: "render",
+
+    /**
+     * render
+     *
+     * If we have made a request and have no data, render no results alert box
+     *
+     * If we have data after a request, loop data and render html node contents into DOM
+     * @access public
+     * @author Ben Moody
+     */
     value: function render() {
       var _this2 = this;
 
@@ -52919,6 +52941,15 @@ function (_React$Component) {
 
   _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default()(RenderSingleFilter, [{
     key: "render",
+
+    /**
+    * render
+    *
+    * Detect filter type and pass config props to correct Component to render the filter
+    *
+    * @access public
+    * @author Ben Moody
+    */
     value: function render() {
       var _this$props$filterCon = this.props.filterConfig,
           _this$props$filterCon2 = _this$props$filterCon.type,
@@ -52995,6 +53026,19 @@ function (_React$Component) {
 
   _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default()(Results, [{
     key: "render",
+
+    /**
+     * render
+     *
+     * If the app is currently making an async REST api request show the loading spinner.
+     * If not, render the results via RenderResultsGrid component
+     *
+     * @param type name
+     * @var type name
+     * @return type name
+     * @access public
+     * @author Ben Moody
+     */
     value: function render() {
       var madeRequest = this.props.requestStatus.madeRequest;
       var page = this.props.requestParams.page;
@@ -53542,6 +53586,25 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _redux_store__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./redux/store */ "./src/assets/js/react/get-posts/redux/store.js");
 /* harmony import */ var _App__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./App */ "./src/assets/js/react/get-posts/App.js");
+/**
+ * get-posts App
+ *
+ * This app will render results from a REST API endpoint request.
+ * The App provides a pagination mechanism out of the box, and has the optional features of rendering Taxonomy filters and a search field
+ *
+ * Render the App via this markup in your page template: <div id="react-app-get-posts"></div>
+ *
+ * The App is configured via the 'reactConfig' node of the 'prsoThemeLocalVars' local JS object rendered by WP.
+ *
+ * Configure the App by changing the config array in the theme's functions.php file within the prso_theme_localize() OR
+ * use the WP filter below to alter the config based on context:
+ *
+ * add_filter( 'prso_theme_localize__react_config', 'your_custom_react_config', 10, 1 );
+ * function( $reactConfig ) { //context based config here// return reactConfig; }
+ *
+ * @access public
+ * @author Ben Moody
+ */
 
  //Redux store
 

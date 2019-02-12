@@ -5,8 +5,6 @@
 
 		<?php get_template_part( 'loop', 'search' ); ?>
 
-		<?php get_sidebar(); // sidebar 1 ?>
-
 	</div>
 </section>
 

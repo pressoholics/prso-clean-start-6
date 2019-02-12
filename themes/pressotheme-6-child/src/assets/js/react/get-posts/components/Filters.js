@@ -46,6 +46,7 @@ export default class Filters extends React.Component {
 
     render() {
 
+        //Do we have at least a filter or search config from local object?
         if( this.shouldRenderFilters() ) {
 
             return(

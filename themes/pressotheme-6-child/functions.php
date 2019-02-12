@@ -84,6 +84,7 @@ function prso_theme_localize() {
 	//Set react default config
 	$data_array['reactConfig'] = array(
 		'restEndpoint' => rest_url( 'wp/v2/posts' ),
+		'nonce'        => wp_create_nonce( 'wp_rest' ),
 
 		//false/filters config array
 		'filters'      => array(
@@ -104,7 +105,6 @@ function prso_theme_localize() {
 		//true/false
 		'search'       => true,
 
-		'nonce'                  => wp_create_nonce( 'wp_rest' ),
 		'perPage'                => get_option( 'posts_per_page' ),
 		'paginationType'         => 'button',
 
@@ -121,9 +121,30 @@ function prso_theme_localize() {
 			'page',
 			'per_page',
 			'search',
+			's',
 		),
 	);
 
+	//Handle search requests page
+	if ( is_search() ) {
+		$data_array['reactConfig']['restEndpoint'] = rest_url( 'wp/v2/search' );
+
+		//REST Search endpoint doesn't support filters out of the box
+		$data_array['reactConfig']['search'] = false;
+		$data_array['reactConfig']['filters'] = false;
+	}
+
+	/**
+	 * prso_theme_localize__react_config
+	 *
+	 * Filter the local config object for theme react apps
+	 *
+	 * @since 6.5
+	 *
+	 * @see prso_theme_localize()
+	 *
+	 * @param array $react_config
+	 */
 	$data_array['reactConfig'] = apply_filters( 'prso_theme_localize__react_config', $data_array['reactConfig'] );
 
 	wp_localize_script( $handle, $obj_name, $data_array );

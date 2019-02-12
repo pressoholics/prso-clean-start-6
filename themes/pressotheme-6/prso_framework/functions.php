@@ -184,7 +184,7 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 	* @author	Ben Moody
 	*/
  	public function theme_activation() {
-	 	
+
 	 	//Set thumbnail sizes
 		$this->add_custom_thumbnails();
 	 	
@@ -430,10 +430,14 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 			
 			//Loop thumbnail sizes
 			foreach( $this->theme_thumbnail_settings as $name => $args ) {
+
+				if( !isset($args['config']) ) {
+					continue;
+				}
+
+				$image_config = wp_parse_args( $args['config'], $defaults );
 				
-				$args = wp_parse_args( $args, $defaults );
-				
-				extract($args);
+				extract($image_config);
 				
 				if( isset( $width, $height, $crop ) ) {
 					
@@ -465,11 +469,34 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 							}
 							break;
 						default:
+
 							//Add custom thumbnail image size to wordpress
 							add_image_size( $name, $width, $height, $crop );
+
+							//High res version
+							if( is_int($width) ) {
+								$width = $width * 2;
+							}
+
+							if( is_int($height) ) {
+								$height = $height * 2;
+							}
+							add_image_size( "{$name}--x2", $width, $height, $crop );
+
 							break;
 					}
 					
+				}
+
+				//Set any custom srcset rules
+				if( isset($args['srcset']) && is_array($args['srcset']) ) {
+
+					$this->register_theme_custom_image_srcset( $name, $args['srcset'] );
+
+//					foreach($args['srcset'] as $srcset_attribute) {
+//						$this->register_theme_custom_image_srcset( $name, $srcset_attribute );
+//					}
+
 				}
 				
 			}
@@ -478,6 +505,140 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 		
 		//Add custom image sizes to "add media:" option for edit post/page
 		add_filter( 'image_size_names_choose', array($this, 'insert_custom_image_sizes') );
+
+		//Filter image srcset attributes
+		add_filter( 'wp_get_attachment_image_attributes', array($this, 'get_image_size_srcset_attr'), 900, 3 );
+
+		//Filter sizes attribute added to images
+		add_filter( 'wp_calculate_image_sizes', array($this, 'custom_image_srcset_sizes_attr'), 900, 2 );
+
+	}
+
+	/**
+	 * register_theme_custom_image_srcset
+	 *
+	 * @CALLED BY PrsoThemeFunctions::add_custom_thumbnails()
+	 *
+	 * Setup the srcset rules for any custom images
+	 *
+	 * @param array $prso_srcset_rules
+	 * @access public
+	 * @author Ben Moody
+	 */
+	private function register_theme_custom_image_srcset( $image_size = '', $srcset_rules = array() ) {
+
+		//vars
+		global $prso_srcset_rules;
+		$current_image_size_rules = array();
+
+		if( isset($image_size) && !empty($srcset_rules) ) {
+
+			if( isset($prso_srcset_rules[ $image_size ]) ) {
+				$current_image_size_rules = $prso_srcset_rules[ $image_size ];
+			}
+
+			$prso_srcset_rules[ $image_size ] = wp_parse_args( $srcset_rules, $current_image_size_rules );
+
+		}
+
+
+	}
+
+	/**
+	 * get_image_size_srcset_attr
+	 *
+	 * @CALLED BY FILTER 'wp_get_attachment_image_attributes'
+	 *
+	 * Helper to generate the image srcset attritbute for a specific custom image
+	 * size based on the rules set in the prso_register_theme_custom_image_srcset()
+	 * function.
+	 *
+	 * If a srcset rule is detected it adds the srcset attribute via the 'wp_get_attachment_image_attributes' filter
+	 *
+	 *
+	 * @param int $attachment_id
+	 * @param string $master_image_size
+	 *
+	 * @return string $srcset
+	 * @access public
+	 * @author Ben Moody
+	 */
+	public function get_image_size_srcset_attr( $attr, $attachment, $master_image_size ) {
+
+		//vars
+		global $prso_srcset_rules;
+		$sources = array();
+		$srcset  = '';
+
+		if( is_admin() ) {
+			return $attr;
+		}
+
+		if( !isset($attachment->ID) ) {
+			return $attr;
+		}
+
+		if( !isset($prso_srcset_rules[ $master_image_size ]) ) {
+			return $attr;
+		}
+
+		$attachment_id = $attachment->ID;
+
+		//Build sources for this image size based on rules
+		foreach ( $prso_srcset_rules[ $master_image_size ] as $rules ) {
+
+			//Default to x2 version of image if custom image size not explicit
+			if( empty($rules['image_size']) ) {
+				$rules['image_size'] = "{$master_image_size}--x2";
+			}
+
+			$sources[ $rules['value'] ] = array(
+				'url'        => wp_get_attachment_image_url( $attachment_id, $rules['image_size'] ),
+				'descriptor' => $rules['descriptor'],
+				'value'      => intval( $rules['value'] ),
+			);
+
+		}
+
+		if ( empty( $sources ) ) {
+			return null;
+		}
+
+		foreach ( $sources as $source ) {
+			$srcset .= str_replace( ' ', '%20', $source['url'] ) . ' ' . $source['value'] . $source['descriptor'] . ', ';
+		}
+
+		$attr['srcset'] = $srcset;
+
+		return $attr;
+	}
+
+	/**
+	 * custom_image_srcset_sizes_attr
+	 *
+	 * @CALLED BY FILTER 'wp_calculate_image_sizes'
+	 *
+	 * Filter the sizes attribute of srcset images
+	 *
+	 * @access public
+	 * @author Ben Moody
+	 */
+	public function custom_image_srcset_sizes_attr( $sizes, $size ) {
+
+		/**
+		* prso_theme__image_sizes_attr
+		 *
+		 * Filter the image sizes attribute string used by srcset for all images
+		*
+		* @since 6.5
+		*
+		* @see PrsoThemeFunctions::custom_image_srcset_sizes_attr()
+		*
+		* @param string sizes_attrbute
+		*/
+		$sizes = apply_filters( 'prso_theme__image_sizes_attr', '' );
+
+		return $sizes;
 	}
 	
 	// Add custom image sizes to post edit insert media option
