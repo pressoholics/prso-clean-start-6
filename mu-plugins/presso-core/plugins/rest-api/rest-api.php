@@ -10,7 +10,7 @@
  * @author    Ben Moody
  */
 class PrsoCustomRestApi {
-	
+
 	public static $base_api_url = 'prso/v1';
 
 	function __construct() {
@@ -35,13 +35,99 @@ class PrsoCustomRestApi {
 			'rest_prepare_post',
 		), 10, 3 );
 
-
-/*
-		add_filter( 'rest_post_query', array(
+		//Register a REST response 'html' field for the search endpoint
+		add_action( 'rest_api_init', array(
 			$this,
-			'rest_post_query',
-		), 999, 2 );
-*/
+			'search_endpoint_rest_fields',
+		), 10 );
+
+
+		/*
+				add_filter( 'rest_post_query', array(
+					$this,
+					'rest_post_query',
+				), 999, 2 );
+		*/
+
+	}
+
+	/**
+	 * search_endpoint_rest_fields
+	 *
+	 * @CALLED BY ACTION 'rest_api_init'
+	 *
+	 * Register a REST response 'html' field for the search endpoint, will
+	 *     contain the server rendered template markup
+	 *
+	 * @access public
+	 * @author Ben Moody
+	 */
+	public function search_endpoint_rest_fields() {
+
+		// schema for the html field
+		$schema = array(
+			'description' => 'Template HTML for item',
+			'type'        => 'string',
+			'context'     => array( 'view' ),
+		);
+
+		// registering the bs_author_name field
+		register_rest_field(
+			'search-result',
+			'html',
+			array(
+				'get_callback'    => array( $this, 'rest_prepare_search' ),
+				'update_callback' => null,
+				'schema'          => $schema,
+			)
+		);
+
+	}
+
+	/**
+	 * rest_prepare_search
+	 *
+	 * @CALLED BY callback for register_rest_field() call in
+	 *     PrsoCustomRestApi::search_endpoint_rest_fields()
+	 *
+	 * The REST search endpoint doesn't have a rest_prepare filter and it only
+	 *     returns a few fields by default. We want to add a html field with
+	 *     our server rendered markup.
+	 *
+	 * PrsoCustomRestApi::search_endpoint_rest_fields() registers the html
+	 *     field for the search endpoint and this methods returns the template
+	 *     markup as a string
+	 *
+	 * @param object $object
+	 * @param string $field_name
+	 * @param object $request
+	 *
+	 * @return string $output
+	 * @access public
+	 * @author Ben Moody
+	 */
+	public function rest_prepare_search( $object, $field_name, $request ) {
+
+		global $post;
+		$output = null;
+		$post   = get_post( $object['id'] );
+
+		if ( ! is_object( $post ) ) {
+			return '';
+		}
+
+		setup_postdata( $post );
+
+		ob_start();
+
+		get_template_part( '/template_parts/posts/part', 'grid_item' );
+
+		$output = ob_get_contents();
+		ob_end_clean();
+
+		wp_reset_postdata();
+
+		return $output;
 
 	}
 
@@ -52,8 +138,8 @@ class PrsoCustomRestApi {
 	 *
 	 * Includes all class files for each rest endpoint
 	 *
-	 * @access 	public
-	 * @author	Ben Moody
+	 * @access    public
+	 * @author    Ben Moody
 	 */
 	public function init_custom_endpoints() {
 
@@ -86,7 +172,7 @@ class PrsoCustomRestApi {
 
 		ob_start();
 
-		get_template_part('/template_parts/posts/part', 'grid_item');
+		get_template_part( '/template_parts/posts/part', 'grid_item' );
 
 		$response->data['html'] = ob_get_contents();
 		ob_end_clean();
@@ -120,7 +206,7 @@ class PrsoCustomRestApi {
 
 		//is search
 		if ( isset( $args['s'] ) && ! empty( $args['s'] ) ) {
-			
+
 		}
 
 		//Detect category filter in request
@@ -182,14 +268,14 @@ class PrsoCustomRestApi {
 	 */
 	public function restrict_external_rest_access( $result = null ) {
 
-		if( defined('WP_DEBUG') && (true === WP_DEBUG) ) {
+		if ( defined( 'WP_DEBUG' ) && ( true === WP_DEBUG ) ) {
 			return true;
 		}
 
-		if( Prso_Gutenberg::is_gutenberg_request() ) {
+		if ( Prso_Gutenberg::is_gutenberg_request() ) {
 			return true;
 		}
-		
+
 		if ( ! empty( $result ) ) {
 			return $result;
 		}
