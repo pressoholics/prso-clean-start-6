@@ -87,20 +87,7 @@ function prso_theme_localize() {
 		'nonce'        => wp_create_nonce( 'wp_rest' ),
 
 		//false/filters config array
-		'filters'      => array(
-			'categories' => array(
-				//select/radio/checkbox
-				'type'         => 'select',
-				'defaultValue' => 'Select Category',
-				'terms'        => array_values( get_terms( 'category' ) ),
-			),
-			'tags'       => array(
-				//select/radio/checkbox
-				'type'         => 'select',
-				'defaultValue' => 'Select Term',
-				'terms'        => array_values( get_terms( 'post_tag' ) ),
-			),
-		),
+		'filters'      => false,
 
 		//true/false
 		'search'       => true,
@@ -122,15 +109,35 @@ function prso_theme_localize() {
 			'per_page',
 			'search',
 			's',
+			'categories',
+			'tags',
 		),
 	);
+
+	//If is posts page
+	if ( is_home() ) {
+		$data_array['reactConfig']['filters'] = array(
+			'categories' => array(
+				//select/radio/checkbox
+				'type'         => 'select',
+				'defaultValue' => 'Select Category',
+				'terms'        => array_values( get_terms( 'category' ) ),
+			),
+			'tags'       => array(
+				//select/radio/checkbox
+				'type'         => 'select',
+				'defaultValue' => 'Select Term',
+				'terms'        => array_values( get_terms( 'post_tag' ) ),
+			),
+		);
+	}
 
 	//Handle search requests page
 	if ( is_search() ) {
 		$data_array['reactConfig']['restEndpoint'] = rest_url( 'wp/v2/search' );
 
 		//REST Search endpoint doesn't support filters out of the box
-		$data_array['reactConfig']['search'] = false;
+		$data_array['reactConfig']['search']  = false;
 		$data_array['reactConfig']['filters'] = false;
 	}
 
