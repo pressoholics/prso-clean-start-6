@@ -86,7 +86,7 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
  		//Setup translation options
  		
  		//Cleanup Wordpress Head
- 		add_action( 'init', array($this, 'wp_head_cleanup') );
+ 		add_action( 'wp', array($this, 'wp_head_cleanup') );
  		
  		//Remove WP version from RSS
  		add_filter( 'the_generator', array($this, 'remove_rss_version') );
@@ -221,7 +221,7 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 		remove_filter( 'wp_mail', 'wp_staticize_emoji_for_email' );
 		add_filter( 'tiny_mce_plugins', array($this, 'disable_emojis_tinymce') );
 
-		if ( !is_admin() ) {
+		if ( !is_admin() && ('wp-login.php' !== get_current_screen()) ) {
 			wp_deregister_script('jquery');                                   // De-Register jQuery
 			wp_register_script('jquery', '', '', '', true);                   // It's already in the Header
 		}

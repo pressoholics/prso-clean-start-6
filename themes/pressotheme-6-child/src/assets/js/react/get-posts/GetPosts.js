@@ -18,8 +18,6 @@ export class GetPosts extends React.Component {
 
         if( this.shouldAppRender() ) {
 
-            const {perPage = 10} = prsoThemeLocalVars.reactConfig;
-
             //Base app init request params
             let requestParams = initalQueryParams;
 
