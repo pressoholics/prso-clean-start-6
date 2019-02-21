@@ -187,6 +187,9 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 
 	 	//Set thumbnail sizes
 		$this->add_custom_thumbnails();
+		
+		//Force Gravity forms to load scripts in footer
+	    add_filter('gform_init_scripts_footer', '__return_true');
 	 	
  	}
  	

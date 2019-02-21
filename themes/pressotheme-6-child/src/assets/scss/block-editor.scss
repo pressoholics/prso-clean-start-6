@@ -1,0 +1,50 @@
+div.editor-styles-wrapper {
+
+  // Global Foundation Settings
+  @import 'settings';
+  @import 'foundation';
+
+  // Global styles
+  @include foundation-forms;
+  @include foundation-typography;
+  @include foundation-callout;
+
+  .acf-block-body.is-preview {
+    @include foundation-button;
+  }
+
+  // Pressoholics Framework Core
+  @import "_mixins.scss";
+
+  // Theme global sass
+  @import "global/_typography.scss";
+  @import "global/_forms.scss";
+  @import "global/_shared.scss";
+
+  // Gutenberg block styles
+  @import "components/blocks/_blocks.scss";
+
+  .callout {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    label {
+      @include rem(font-size, 15px);
+    }
+  }
+
+  p {
+    color: $body-font-color;
+    font-family: $body-font-family;
+    font-size: $global-font-size;
+  }
+
+  .button {
+    height: auto;
+  }
+
+  /* Gravity Forms
+  ---------------------------------------------------------------------- */
+  .gform_wrapper .gform_footer .button {
+    min-height: 40px;
+  }
+
+}

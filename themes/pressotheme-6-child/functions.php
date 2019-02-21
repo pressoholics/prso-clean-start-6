@@ -22,6 +22,11 @@ function prso_import_theme_helpers() {
 	prso_include_file( dirname( __FILE__ ) . '/prso_framework/helpers.php' );
 }
 
+//Remove empty p tags from content
+remove_filter('the_content', 'wpautop');
+
+//Remove gravity forms CSS
+add_filter('pre_option_rg_gforms_disable_css', '__return_true');
 
 /**
  * ADD CUSTOM THEME FUNCTIONS HERE -----
@@ -123,6 +128,30 @@ function prso_theme_localize() {
 				'defaultValue' => 'Select Category',
 				'terms'        => array_values( get_terms( 'category' ) ),
 			),
+			'tags'       => array(
+				//select/radio/checkbox
+				'type'         => 'select',
+				'defaultValue' => 'Select Term',
+				'terms'        => array_values( get_terms( 'post_tag' ) ),
+			),
+		);
+	}
+	
+	//Is category archive
+	if( is_category() ) {
+		$data_array['reactConfig']['filters'] = array(
+			'categories' => array(
+				//select/radio/checkbox
+				'type'         => 'select',
+				'defaultValue' => 'Select Category',
+				'terms'        => array_values( get_terms( 'category' ) ),
+			),
+		);
+	}
+	
+	//Is tag archive
+	if( is_tag()() ) {
+		$data_array['reactConfig']['filters'] = array(
 			'tags'       => array(
 				//select/radio/checkbox
 				'type'         => 'select',

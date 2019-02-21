@@ -19,11 +19,30 @@ class Prso_Gutenberg {
 
 	public function load_blocks() {
 
-		//Vars
-		$cpt_path = dirname( __FILE__ ) . '/blocks';
+		//Enqueue block editor scripts
+		add_action( 'enqueue_block_editor_assets', array($this, 'enqueue_block_editor_scripts') );
 
-		//Include files
-		prso_include_all_files( $cpt_path );
+	}
+
+	public function enqueue_block_editor_scripts() {
+
+		//Vars
+		$dist_path = dirname( __FILE__ ) . '/blocks/dist';
+		$dist_url = plugin_dir_url( __FILE__ ) . '/blocks/dist';
+
+		// Scripts.
+		wp_enqueue_script(
+			'prso-guten-blocks-js', // Handle.
+			$dist_url . '/blocks.build.js', // Block.build.js: We register the block here. Built with Webpack.
+			array(
+				'wp-blocks',
+				'wp-i18n',
+				'wp-element',
+				'wp-editor',
+			), // Dependencies, defined above.
+			filemtime( $dist_path . '/blocks.build.js' ), // Version: filemtime — Gets file modification time.
+			true // Enqueue the script in the footer.
+		);
 
 	}
 
@@ -67,8 +86,8 @@ class Prso_Gutenberg {
 			$categories,
 			array(
 				array(
-					'slug'  => 'gcc-blocks',
-					'title' => 'GCC Blocks',
+					'slug'  => 'prso-blocks',
+					'title' => 'Custom Blocks',
 				),
 			)
 		);
@@ -138,6 +157,7 @@ class Prso_Gutenberg {
 			'core-embed/vimeo',
 
 			//Project blocks
+			'prso/carousel'
 		);
 
 		/**

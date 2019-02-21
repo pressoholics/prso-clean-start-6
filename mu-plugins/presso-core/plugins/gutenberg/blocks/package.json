@@ -1,0 +1,17 @@
+{
+  "name": "my-block-cgb-guten-block",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "cgb-scripts start",
+    "build": "cgb-scripts build",
+    "eject": "cgb-scripts eject"
+  },
+  "dependencies": {
+    "@vermilion/post-selector": "^1.0.0",
+    "@wordpress/api-fetch": "^2.2.5",
+    "@wordpress/block-library": "^2.2.7",
+    "@wordpress/blocks": "^6.0.2",
+    "cgb-scripts": "1.11.1"
+  }
+}

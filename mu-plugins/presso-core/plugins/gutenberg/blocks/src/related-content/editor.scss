@@ -1,0 +1,109 @@
+@mixin horizontal-align($position: relative) {
+  position: $position;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  transform: translateX(-50%);
+}
+
+/**
+ * #.# Editor Styles
+ *
+ * CSS for just Backend enqueued after style.scss
+ * which makes it higher in priority.
+ */
+
+.wp-block-jam3-related-content  {
+  color: $black;
+  margin: 0 auto;
+  max-width: 740px;
+  padding: 0;
+
+  .wp-block-jam3-related-content-items-wrapper {
+    padding: 1rem 0;
+  }
+
+  .wp-block-jam3-related-content-item {
+    background: $white;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    position: relative;
+
+    .wp-block-jam3-related-content-item-delete {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+
+      button {
+        color: red;
+      }
+
+    }
+
+    .wp-block-jam3-related-content-item-insert {
+      @include horizontal-align(absolute);
+
+      &.above {
+        top: -10px;
+      }
+
+      &.below {
+        bottom: -17px;
+      }
+
+    }
+
+  }
+
+}
+
+.wp-block-jam3-related-item-search-wrapper {
+
+  button {
+    cursor: pointer;
+  }
+
+  button svg {
+    color: red;
+    margin-left: 15px;
+    width: 15px;
+  }
+
+  ul {
+    list-style: none !important;
+    background-color: #ffffff;
+    padding: 10px 15px !important;
+
+    &:after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+
+    li {
+      float: left;
+      padding: 0 !important;
+      margin: 0 !important;
+      cursor: pointer;
+      font-size: 13px;
+      width: 100%;
+
+      &:hover {
+        text-decoration: underline;
+      }
+
+    }
+
+  }
+
+}
+
+.edit-post-meta-boxes-area.is-side {
+  .fm-wrapper .fm-item {
+
+    .fmjs-removable-element {
+      max-width: 80%;
+    }
+
+  }
+}

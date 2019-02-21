@@ -32,7 +32,7 @@ function loadConfig() {
 // Build the "dist" folder by running all of the below tasks
 // Sass must be run later so UnCSS can search for used classes in the others assets.
 gulp.task('build',
- gulp.series(clean, gulp.parallel(javascript, images, copy), sass));
+ gulp.series(clean, gulp.parallel(javascript, images, copy), sass, blockEditorSass, editorSass));
 
 // Build the site, run the server, and watch for file changes
 gulp.task('default',
@@ -103,6 +103,46 @@ function sass() {
     .pipe(browser.reload({ stream: true }));
 }
 
+function blockEditorSass() {
+
+    const postCssPlugins = [
+        // Autoprefixer
+        autoprefixer({ browsers: COMPATIBILITY }),
+
+        // UnCSS - Uncomment to remove unused styles in production
+        // PRODUCTION && uncss.postcssPlugin(UNCSS_OPTIONS),
+    ].filter(Boolean);
+
+    return gulp.src('src/assets/scss/block-editor.scss')
+        .pipe($.sass({
+            includePaths: PATHS.sass
+        })
+            .on('error', $.sass.logError))
+        .pipe($.postcss(postCssPlugins))
+        .pipe($.if(PRODUCTION, $.cleanCss({ compatibility: 'ie9' })))
+        .pipe(gulp.dest(PATHS.dist + '/assets/css'));
+}
+
+function editorSass() {
+
+    const postCssPlugins = [
+        // Autoprefixer
+        autoprefixer({ browsers: COMPATIBILITY }),
+
+        // UnCSS - Uncomment to remove unused styles in production
+        // PRODUCTION && uncss.postcssPlugin(UNCSS_OPTIONS),
+    ].filter(Boolean);
+
+    return gulp.src('src/assets/scss/editor.scss')
+        .pipe($.sass({
+            includePaths: PATHS.sass
+        })
+            .on('error', $.sass.logError))
+        .pipe($.postcss(postCssPlugins))
+        .pipe($.if(PRODUCTION, $.cleanCss({ compatibility: 'ie9' })))
+        .pipe(gulp.dest(PATHS.dist + '/assets/css'));
+}
+
 let webpackConfig = {
   mode: (PRODUCTION ? 'production' : 'development'),
   module: {
@@ -119,7 +159,7 @@ let webpackConfig = {
       }
     ]
   },
-  devtool: !PRODUCTION && 'source-map'
+  devtool: !PRODUCTION && 'source-map',
 }
 
 // Combine JavaScript into one file
@@ -166,7 +206,7 @@ function watch() {
   gulp.watch('src/{layouts,partials}/**/*.html').on('all', gulp.series(resetPages, pages, browser.reload));
   gulp.watch('src/data/**/*.{js,json,yml}').on('all', gulp.series(resetPages, pages, browser.reload));
   gulp.watch('src/helpers/**/*.js').on('all', gulp.series(resetPages, pages, browser.reload));
-  gulp.watch('src/assets/scss/**/*.scss').on('all', sass);
+  gulp.watch('src/assets/scss/**/*.scss').on('all', gulp.series(blockEditorSass, editorSass, sass));
   gulp.watch('src/assets/js/**/*.js').on('all', gulp.series(javascript, browser.reload));
   gulp.watch('src/assets/img/**/*').on('all', gulp.series(images, browser.reload));
   gulp.watch('src/styleguide/**').on('all', gulp.series(styleGuide, browser.reload));

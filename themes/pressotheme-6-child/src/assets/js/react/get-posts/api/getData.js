@@ -122,7 +122,7 @@ export const setupUrlQuery = ( requestParams ) => {
 
             } else {
 
-                requestParams.selectedFilters[filter] = Number(value);
+                requestParams[filter] = Number(value);
 
             }
 

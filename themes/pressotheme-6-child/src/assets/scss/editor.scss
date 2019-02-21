@@ -1,0 +1,30 @@
+// Global Foundation Settings
+@import 'settings';
+@import 'foundation';
+
+// Global styles
+@include foundation-button;
+@include foundation-typography;
+
+// Pressoholics Framework Core
+@import "_mixins.scss";
+
+// Theme global sass
+@import "global/_typography.scss";
+
+/* Editor specific styles
+---------------------------------------------------------------------- */
+html, body {
+  height: auto !important;
+}
+
+body {
+  margin: 9px 10px;
+  max-width: 100%;
+}
+
+p {
+	color: $body-font-color;
+	font-family: $body-font-family;
+	font-size: $global-font-size;
+}

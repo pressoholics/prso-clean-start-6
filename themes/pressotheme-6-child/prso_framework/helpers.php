@@ -226,22 +226,22 @@ function prso_get_search_query() {
  * @access    public
  * @author    Ben Moody
  */
-//add_action( 'init', 'prso_tiny_mce_editor_styles', 10 );
+add_action( 'init', 'prso_tiny_mce_editor_styles', 10 );
 function prso_tiny_mce_editor_styles() {
 
-	add_editor_style();
+	add_editor_style( '/dist/assets/css/editor.css' );
 
 }
 
 /**
  * Enqueue supplemental block editor styles.
  */
-//add_action( 'enqueue_block_editor_assets', 'prso_editor_frame_styles' );
+add_action( 'enqueue_block_editor_assets', 'prso_editor_frame_styles' );
 function prso_editor_frame_styles() {
 
 	wp_enqueue_style(
 		'prso-editor-frame-styles',
-		get_theme_file_uri( 'block-editor-style.css' ),
+		get_stylesheet_directory_uri() . '/dist/assets/css/block-editor.css',
 		false,
 		'1.0',
 		'all'
@@ -453,4 +453,38 @@ if( !function_exists('prso_theme_comments') ) {
 		<?php
 	} // don't remove this bracket!
 
+}
+
+/**
+* react_term_link_filter
+*
+* @CALLED BY FILTER 'term_link'
+*
+* Filter term link to add URL params required by the post grid react app
+*
+* @access public
+* @author Ben Moody
+*/
+add_filter('term_link', 'react_term_link_filter', 10, 3);
+function react_term_link_filter( $url, $term, $taxonomy ) {
+
+	switch( $taxonomy ) {
+		case 'category':
+			$taxonomy = 'categories';
+			break;
+		case 'tag':
+			$taxonomy = 'tags';
+			break;
+	}
+
+	$url = add_query_arg(
+		array(
+			'page' => 1,
+			'per_page' => get_option( 'posts_per_page' ),
+			$taxonomy => $term->term_id,
+		),
+		$url
+	);
+
+	return esc_url_raw( $url );
 }
