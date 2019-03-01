@@ -39,7 +39,7 @@ class PrsoSlugPostType {
 		//add_action( 'init', array($this, 'taxonomy_filters'), 0 );
 
 		//Filter theme wp_api local object for this post type
-		//		add_filter( 'prso_theme_localize__wp_api', array(
+		//		add_filter( 'prso_theme_localize__react_config', array(
 		//			$this,
 		//			'wp_api_local_object',
 		//		) );

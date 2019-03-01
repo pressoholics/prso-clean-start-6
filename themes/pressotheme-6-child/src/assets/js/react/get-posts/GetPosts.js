@@ -10,7 +10,7 @@ import Pagination from "./components/Pagination";
 import Filters from "./components/Filters";
 
 //Data helpers
-import {initalQueryParams, setupUrlQuery} from './api/getData';
+import {initalQueryParams, setupUrlQuery, setupIntialSelectedFilters} from './api/getData';
 
 export class GetPosts extends React.Component {
 
@@ -20,6 +20,9 @@ export class GetPosts extends React.Component {
 
             //Base app init request params
             let requestParams = initalQueryParams;
+
+            //Check for any selected filters from local object
+            requestParams = setupIntialSelectedFilters( requestParams );
 
             //Get any valid params from the browser URL
             requestParams = setupUrlQuery( requestParams );

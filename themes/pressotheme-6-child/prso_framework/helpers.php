@@ -465,7 +465,7 @@ if( !function_exists('prso_theme_comments') ) {
 * @access public
 * @author Ben Moody
 */
-add_filter('term_link', 'react_term_link_filter', 10, 3);
+//add_filter('term_link', 'react_term_link_filter', 10, 3);
 function react_term_link_filter( $url, $term, $taxonomy ) {
 
 	switch( $taxonomy ) {
@@ -487,4 +487,26 @@ function react_term_link_filter( $url, $term, $taxonomy ) {
 	);
 
 	return esc_url_raw( $url );
+}
+
+/**
+* react_get_queried_object_id
+*
+* Helper to return the object ID of the current quried object, useful when setting selected tax filters for react local object
+*
+* @access public
+* @author Ben Moody
+*/
+function react_get_queried_object_id() {
+
+	//vars
+	$object = get_queried_object();
+
+	if( isset($object->term_id) ) {
+		return $object->term_id;
+	} elseif( isset($object->ID) ) {
+		return $object->ID;
+	}
+
+	return false;
 }

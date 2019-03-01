@@ -44,7 +44,8 @@ export class SelectField extends React.Component {
 
             //Update request params with this filters params
             this.props.updateRestRequestParams({
-                [queryParamKey]: value
+                page: 1, //reset to first page
+                [queryParamKey]: value,
             });
 
         }

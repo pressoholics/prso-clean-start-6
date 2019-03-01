@@ -93,6 +93,9 @@ function prso_theme_localize() {
 
 		//false/filters config array
 		'filters'      => false,
+		
+		//If we need to select any filters on page load. taxonomy => term_id pair
+		'selectedFilters' => false,
 
 		//true/false
 		'search'       => true,
@@ -147,6 +150,11 @@ function prso_theme_localize() {
 				'terms'        => array_values( get_terms( 'category' ) ),
 			),
 		);
+		
+		$selected_filter = react_get_queried_object_id();
+		if( false !== $selected_filter ) {
+			$data_array['reactConfig']['selectedFilters'] = array( 'categories' => $selected_filter );
+		}
 	}
 	
 	//Is tag archive
@@ -159,6 +167,11 @@ function prso_theme_localize() {
 				'terms'        => array_values( get_terms( 'post_tag' ) ),
 			),
 		);
+		
+		$selected_filter = react_get_queried_object_id();
+		if( false !== $selected_filter ) {
+			$data_array['reactConfig']['selectedFilters'] = array( 'tags' => $selected_filter );
+		}
 	}
 
 	//Handle search requests page

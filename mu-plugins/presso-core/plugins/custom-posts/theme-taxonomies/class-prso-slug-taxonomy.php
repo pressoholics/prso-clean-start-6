@@ -16,13 +16,14 @@ class PrsoSlugTaxonomy {
 
 	public static $taxonomy_slug = 'cpt_slug';
 	public static $taxonomy_rewrite_slug = 'cpt-slug';
-	public static $taxonomy_archive_slug = false;
+	public static $taxonomy_with_front = false;
+	
+	public static $taxonomy_show_in_rest = false;
 	public static $taxonomy_rest_slug = false;
 
 	public static $taxonomy_singular = 'cpt_singular';
 	public static $taxonomy_plural = 'cpt_plural';
 
-	public static $dashicon = 'dashicons-format-aside';
 	public static $query_var = false;
 
 	function __construct() {
@@ -92,9 +93,47 @@ class PrsoSlugTaxonomy {
 	 */
 	public function register_taxonomy() {
 
-		//vars
-
-
+		$labels = array(
+			'name'                       => self::$taxonomy_singular,
+			'singular_name'              => self::$taxonomy_singular,
+			'menu_name'                  => self::$taxonomy_plural,
+			'all_items'                  => __( 'All Items', 'text_domain' ),
+			'parent_item'                => __( 'Parent Item', 'text_domain' ),
+			'parent_item_colon'          => __( 'Parent Item:', 'text_domain' ),
+			'new_item_name'              => __( 'New Item Name', 'text_domain' ),
+			'add_new_item'               => __( 'Add New Item', 'text_domain' ),
+			'edit_item'                  => __( 'Edit Item', 'text_domain' ),
+			'update_item'                => __( 'Update Item', 'text_domain' ),
+			'view_item'                  => __( 'View Item', 'text_domain' ),
+			'separate_items_with_commas' => __( 'Separate items with commas', 'text_domain' ),
+			'add_or_remove_items'        => __( 'Add or remove items', 'text_domain' ),
+			'choose_from_most_used'      => __( 'Choose from the most used', 'text_domain' ),
+			'popular_items'              => __( 'Popular Items', 'text_domain' ),
+			'search_items'               => __( 'Search Items', 'text_domain' ),
+			'not_found'                  => __( 'Not Found', 'text_domain' ),
+			'no_terms'                   => __( 'No items', 'text_domain' ),
+			'items_list'                 => __( 'Items list', 'text_domain' ),
+			'items_list_navigation'      => __( 'Items list navigation', 'text_domain' ),
+		);
+		$rewrite = array(
+			'slug'                       => self::$taxonomy_rewrite_slug,
+			'with_front'                 => self::$taxonomy_with_front,
+			'hierarchical'               => false,
+		);
+		$args = array(
+			'labels'                     => $labels,
+			'hierarchical'               => false,
+			'public'                     => true,
+			'show_ui'                    => true,
+			'show_admin_column'          => true,
+			'show_in_nav_menus'          => true,
+			'show_tagcloud'              => true,
+			'query_var'                  => self::$query_var,
+			'rewrite'                    => $rewrite,
+			'show_in_rest'               => self::$taxonomy_show_in_rest,
+			'rest_base'                  => self::$taxonomy_rest_slug,
+		);
+		register_taxonomy( self::$taxonomy_slug, array( 'post' ), $args );
 	}
 
 	/**

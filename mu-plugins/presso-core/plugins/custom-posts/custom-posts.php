@@ -9,7 +9,7 @@
  * @author    Ben Moody
  */
 
-add_action( 'init', 'prso_init_custom_post_tax_filter_class', 1 );
+add_action( 'plugins_loaded', 'prso_init_custom_post_tax_filter_class', 1 );
 function prso_init_custom_post_tax_filter_class() {
 
 	//Init vars

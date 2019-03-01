@@ -26,7 +26,7 @@ export class RenderResultsGrid extends React.Component {
         const {noResultsText = ''} = this.i18n;
 
         const childElements = resultsData.map(post => (
-            <li key={`${post.title.rendered}-${post.id}`} dangerouslySetInnerHTML={this.renderTemplatePart(post)}></li>
+            <li className='item' key={`${post.title.rendered}-${post.id}`} dangerouslySetInnerHTML={this.renderTemplatePart(post)}></li>
         ));
 
         if (resultsData.length > 0) {

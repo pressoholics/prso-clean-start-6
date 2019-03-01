@@ -101,6 +101,7 @@ export const setupUrlQuery = ( requestParams ) => {
     allowedFilterUrlParams.map(filter => {
 
         const value = params.get(filter);
+        const {selectedFilters = {}} = requestParams;
 
         if (value !== null) {
 
@@ -128,6 +129,31 @@ export const setupUrlQuery = ( requestParams ) => {
 
         }
 
+    });
+
+    return requestParams;
+};
+
+/**
+* setupIntialSelectedFilters
+*
+* Detect if selected filters ahve been provided in the local object during page load
+* If so, add them to the request params object. Allows WP to set any preslected filters on page load
+*
+* @access public
+* @author Ben Moody
+*/
+export const setupIntialSelectedFilters = ( requestParams ) => {
+
+    const { selectedFilters = false } = prsoThemeLocalVars.reactConfig;
+
+    if( selectedFilters === false ) {
+        return requestParams;
+    }
+
+    //Loop selected filters and add them to request params object
+    Object.entries( selectedFilters ).map(([filter, value]) => {
+        requestParams[filter] = Number(value);
     });
 
     return requestParams;
