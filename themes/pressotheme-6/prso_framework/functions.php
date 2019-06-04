@@ -224,7 +224,7 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 		remove_filter( 'wp_mail', 'wp_staticize_emoji_for_email' );
 		add_filter( 'tiny_mce_plugins', array($this, 'disable_emojis_tinymce') );
 
-		if ( !is_admin() && ('wp-login.php' !== get_current_screen()) ) {
+		if( !is_admin() && !function_exists('get_current_screen') ) {
 			wp_deregister_script('jquery');                                   // De-Register jQuery
 			wp_register_script('jquery', '', '', '', true);                   // It's already in the Header
 		}

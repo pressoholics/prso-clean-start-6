@@ -21,12 +21,12 @@ export default class RenderSingleFilter extends React.Component {
     */
     render() {
 
-        const {type = 'select', defaultValue = 'Select Option', terms = []} = this.props.filterConfig;
+        const {type = 'select', defaultValue = 'Select Option', selected = 'false', terms = []} = this.props.filterConfig;
 
         return(
             <React.Fragment>
                 {type === 'select' ? (
-                    <SelectField queryParamKey={this.props.queryParamKey} values={terms} defaultValue={defaultValue} />
+                    <SelectField queryParamKey={this.props.queryParamKey} values={terms} defaultValue={defaultValue} selected={selected} />
                 ) : (
                     <div></div>
                     // <RadioField  values={terms} defaultValue={defaultValue} />

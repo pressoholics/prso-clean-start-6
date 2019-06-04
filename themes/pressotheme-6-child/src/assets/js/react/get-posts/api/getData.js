@@ -1,6 +1,7 @@
 export const initalQueryParams = {
     page: 1,
     per_page: prsoThemeLocalVars.reactConfig.perPage,
+    ...prsoThemeLocalVars.reactConfig.queryParams,
 };
 
 export const restFetchPosts = async ( requestParams ) => {

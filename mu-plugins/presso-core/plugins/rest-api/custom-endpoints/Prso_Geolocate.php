@@ -68,6 +68,8 @@ class PrsoGeolocate extends PrsoCustomRestApi {
 		//Get user location
 		$user_location = $this->get_user_location( $user_ip );
 
+		$response = $user_location;
+
 		/**
 		 * prso_geolocate__response
 		 *

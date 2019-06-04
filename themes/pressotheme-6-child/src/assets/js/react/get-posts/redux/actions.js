@@ -111,6 +111,14 @@ export const fetchPosts = ( requestParams ) => async dispatch => {
 
         console.error('error', e);
 
+		dispatch(
+            getInitialPosts([])
+        );
+
+        dispatch(
+            cachTotalPages(0)
+        );
+
         dispatch({
             type: MADE_POSTS_REQUEST,
             payload: false,

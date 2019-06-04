@@ -54,11 +54,11 @@ export class SelectField extends React.Component {
 
     render() {
 
-        const {queryParamKey, defaultValue, values} = this.props;
+        const {queryParamKey, defaultValue, selected, values} = this.props;
 
         return (
             <React.Fragment>
-                <select id={queryParamKey} onChange={this.onFilterChange} defaultValue='false'>
+                <select id={queryParamKey} onChange={this.onFilterChange} defaultValue={selected}>
                     <option value='false' key='default'>{defaultValue}</option>
                     {values.map(term => (
                         <option value={term.term_id} key={term.slug}>{term.name}</option>

@@ -49,6 +49,12 @@ class PrsoSlugPostType {
 		//			$this,
 		//			'detect_custom_query_variable',
 		//		) );
+		
+		//REST prepare query
+		//add_filter("rest_{$post_type_slug}_query", array(
+		//	$this,
+		//	'rest_prepare_query'
+		//), 900, 2);
 
 		//REST prepare post
 		//add_filter( "rest_prepare_{$post_type_slug}", array($this, 'rest_prepare'), 999, 3 );
@@ -70,6 +76,24 @@ class PrsoSlugPostType {
 
 	}
 
+	/**
+	* rest_prepare_query
+	*
+	* @CALLED BY FILTER "rest_{$post_type_slug}_query"
+	*
+	* Filter the REST query args for this post type
+	*
+	* @param array $args
+	* @param object $request
+	* @return array $args
+	* @access public
+	* @author Ben Moody
+	*/
+	public function rest_prepare_query( $args, $request ) {
+
+		return $args;
+	}
+	
 	public function hide_from_public() {
 
 		global $wp_query;
@@ -201,14 +225,19 @@ class PrsoSlugPostType {
 	 */
 	public function wp_api_local_object( $local_object ) {
 
+		$new_object_items = array();
+
 		if ( ! is_post_type_archive( self::$post_type_slug ) ) {
 			return $local_object;
 		}
 
-		$local_object[ self::$post_type_slug ] = array(
-			'restRoute' => rest_url( 'wp/v2/' . self::$post_type_rest_slug ),
+		$new_object_items = array(
+			'restEndpoint' => rest_url( 'wp/v2/' . self::$post_type_rest_slug ),
 			'perPage'   => get_option( 'posts_per_page' ),
+			'search'    => false,
 		);
+
+		$local_object = wp_parse_args( $new_object_items, $local_object );
 
 		return $local_object;
 	}

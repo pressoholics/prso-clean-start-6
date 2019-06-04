@@ -120,6 +120,8 @@ function prso_theme_localize() {
 			'categories',
 			'tags',
 		),
+		
+		'queryParams' => array(),
 	);
 
 	//If is posts page
@@ -158,7 +160,7 @@ function prso_theme_localize() {
 	}
 	
 	//Is tag archive
-	if( is_tag()() ) {
+	if( is_tag() ) {
 		$data_array['reactConfig']['filters'] = array(
 			'tags'       => array(
 				//select/radio/checkbox

@@ -19,6 +19,9 @@ function prso_replace_dev_with_prodcution_image_urls() {
 			add_filter('wp_get_attachment_url', 'prso_wp_get_production_attachment_url', 10, 1 );
 			add_filter('wp_get_attachment_image_attributes', 'prso_wp_get_production_attachment_url', 10, 1 );
 
+			//Filter content for dev domain and replace with production domain
+			add_filter('the_content', 'prso_wp_set_production_content_urls', 10, 1 );
+
 		}
 
 	}
@@ -50,6 +53,23 @@ function prso_wp_get_production_attachment_url( $url ) {
 	}
 
 	return $url;
+}
+
+/**
+ * prso_wp_set_production_content_urls
+ *
+ * @CALLED BY FILTER 'the_content'
+ *
+ * Filters all instances of the dev url in content with production url
+ *
+ * @access public
+ * @author Ben Moody
+ */
+function prso_wp_set_production_content_urls( $content ) {
+
+	$content = str_replace( WP_SITEURL, PROD_URL, $content );
+
+	return $content;
 }
 
 /**
