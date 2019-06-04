@@ -15,6 +15,7 @@
     "jquery": "^3.2.1",
     "motion-ui": "^2.0.3",
     "react": "^16.8.1",
+    "react-app-polyfill": "^1.0.1",
     "react-dom": "^16.8.1",
     "react-redux": "^6.0.0",
     "redux": "^4.0.1",
