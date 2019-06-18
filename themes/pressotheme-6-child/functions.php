@@ -200,3 +200,56 @@ function prso_theme_localize() {
 
 	wp_localize_script( $handle, $obj_name, $data_array );
 }
+
+/**
+ * prso_preload_webfonts
+ *
+ * @CALLED BY ACTION 'wp_head'
+ *
+ * Preload any webfonts. NOTE that really only woff ext should be preloaded as
+ *     browsers which support preloading also support WOFF
+ *
+ * https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/webfont-optimization
+ *
+ * @access public
+ * @author Ben Moody
+ */
+add_action( 'wp_head', 'prso_preload_webfonts', 1 );
+function prso_preload_webfonts() {
+
+	//vars
+	$defaults = [ 'ext' => 'woff' ];
+	$fonts    = [
+		[ 'path' => 'GTWalsheimPro-Bold/GTWalsheimPro-Bold' ],
+		[ 'path' => 'GTWalsheimPro-Bold/GTWalsheimPro-Regular' ],
+	];
+
+	if ( empty( $fonts ) ) {
+		return;
+	}
+
+	?>
+	<!-- preload fonts -->
+	<?php
+
+	foreach ( $fonts as $font_params ) {
+
+		$font_params = wp_parse_args( $font_params, $defaults );
+		$font_path   = $font_params['path'];
+
+		$font_params['ext'] = explode( ',', $font_params['ext'] );
+
+		foreach ( $font_params['ext'] as $font_file_ext ) {
+			?>
+			<link rel="preload"
+				  href="<?php echo get_stylesheet_directory_uri(); ?>/dist/assets/webfonts/<?php echo esc_attr( $font_path ); ?>.<?php echo esc_attr( $font_file_ext ); ?>"
+				  as="font">
+			<?php
+		}
+	}
+
+	?>
+	<!-- END preload fonts -->
+	<?php
+
+}

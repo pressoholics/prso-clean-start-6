@@ -62,6 +62,22 @@
 
 @import 'util/util';
 
+// Fonts
+// ---------
+
+// Example
+/*
+@include font-face(
+  'GTWalsheimPro-Bold',
+  '../webfonts/GTWalsheimPro-Bold/',
+  'GTWalsheimPro-Bold'
+);
+$font-GTWalsheimPro-Bold: 'GTWalsheimPro-Bold', 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;
+*/
+
+// Colours
+// ---------
+
 // 1. Global
 // ---------
 

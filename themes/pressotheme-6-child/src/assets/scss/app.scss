@@ -1,5 +1,33 @@
 @charset 'utf-8';
 
+/**
+ * Generates a complete font face declarations
+ * where invoked
+ *
+ * @type mixin
+ *
+ * @param $font-family The with which the font family will be called
+ * @param $font-path   The path to the fonts directory relative to the compiled stylesheet
+ * @param $font-file   The name of the actual font file
+ * @param $font-weight The font weight (normal, bold, lighter)
+ * @param $font-weight The font style (normal, italic)
+ *
+ * Example Usage:
+ * @include font-face('Open Sans', '../fonts/', 'OpenSans-regular-webfont', bold, italic)
+ */
+@mixin font-face($font-family, $font-path, $font-file, $font-weight: normal, $font-style: normal ) {
+  @font-face {
+    font-family: $font-family;
+    src: url(  $font-path + $font-file + '.eot' );
+    src: url( $font-path + $font-file + '.eot?#iefix') format('embedded-opentype'),
+    url( $font-path + $font-file + '.woff') format('woff'),
+    url( $font-path + $font-file + '.ttf') format('truetype'),
+    url( $font-path + $font-file + '.svg#{$font-family}') format('svg');
+    font-weight: $font-weight;
+    font-style: $font-style;
+  }
+}
+
 @import 'settings';
 @import 'foundation';
 @import 'motion-ui';
