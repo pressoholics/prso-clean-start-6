@@ -25,6 +25,7 @@
     url( $font-path + $font-file + '.svg#{$font-family}') format('svg');
     font-weight: $font-weight;
     font-style: $font-style;
+    font-display: auto;
   }
 }
 

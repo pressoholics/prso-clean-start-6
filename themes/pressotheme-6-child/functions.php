@@ -243,7 +243,8 @@ function prso_preload_webfonts() {
 			?>
 			<link rel="preload"
 				  href="<?php echo get_stylesheet_directory_uri(); ?>/dist/assets/webfonts/<?php echo esc_attr( $font_path ); ?>.<?php echo esc_attr( $font_file_ext ); ?>"
-				  as="font">
+				  as="font"
+				  crossorigin="anonymous">
 			<?php
 		}
 	}
