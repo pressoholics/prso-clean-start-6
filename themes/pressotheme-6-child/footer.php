@@ -8,23 +8,21 @@
 					<footer id="footer-container" class="grid-container">
 						<div class="grid-x">
 
-							<nav class="large-10 cell clearfix">
+							<?php if( has_nav_menu('footer_links') ): ?>
+							<nav id="footer-one" class="footer-nav">
+								<h6><?php echo prso_get_nav_menu_meta( 'footer_links' ); ?></h6>
 								<?php
-								if( has_nav_menu('footer_links') ) {
-									//Get cached nav menu
-									PrsoCoreWpqueryModel::cached_nav_menu(
-										array(
-											'menu' 				=> 'footer_links', /* menu name */
-											'menu_class' 		=> 'link-list',
-											'theme_location' 	=> 'footer_links', /* where in the theme it's assigned */
-											'container_class' 	=> 'footer-links clearfix', /* container class */
-											'walker' 			=> new footer_links_walker(),
-											'fallback_cb'		=> false
-										)
-									);
-								}
+									wp_nav_menu(
+									array(
+										'menu' 				=> 'footer_links', /* menu name */
+										'theme_location' 	=> 'footer_links', /* where in the theme it's assigned */
+										'depth' 			=> '1',
+										'fallback_cb'		=> false
+									)
+								);
 								?>
 							</nav>
+							<?php endif; ?>
 								
 						</div> <!-- end footer -->
 					</footer>

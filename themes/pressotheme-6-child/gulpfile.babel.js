@@ -32,7 +32,13 @@ function loadConfig() {
 // Build the "dist" folder by running all of the below tasks
 // Sass must be run later so UnCSS can search for used classes in the others assets.
 gulp.task('build',
- gulp.series(clean, gulp.parallel(javascript, images, copy), sass, blockEditorSass, editorSass));
+ gulp.series(clean, gulp.parallel(javascript,images, copy), sass, blockEditorSass, editorSass));
+
+gulp.task('reactDev',
+  gulp.series(reactJavascript, server, watch));
+
+gulp.task('reactBuild',
+  gulp.series(reactJavascript));
 
 // Build the site, run the server, and watch for file changes
 gulp.task('default',
@@ -176,6 +182,20 @@ function javascript() {
     .pipe(gulp.dest(PATHS.dist + '/assets/js'));
 }
 
+// Combine REACT into one file
+// In production, the file is minified
+function reactJavascript() {
+  return gulp.src(PATHS.react)
+    .pipe(named())
+    .pipe($.sourcemaps.init())
+    .pipe(webpackStream(webpackConfig, webpack2))
+    .pipe($.if(PRODUCTION, $.uglify()
+      .on('error', e => { console.log(e); })
+    ))
+    .pipe($.if(!PRODUCTION, $.sourcemaps.write()))
+    .pipe(gulp.dest(PATHS.dist + '/assets/react'));
+}
+
 // Copy images to the "dist" folder
 // In production, the images are compressed
 function images() {
@@ -211,4 +231,8 @@ function watch() {
   gulp.watch('src/assets/img/**/*').on('all', gulp.series(images, browser.reload));
   gulp.watch('src/styleguide/**').on('all', gulp.series(styleGuide, browser.reload));
   gulp.watch('*.php').on('all', gulp.series(browser.reload));
+}
+
+function reactWatch() {
+  gulp.watch('src/assets/react/**/*.js').on('all', gulp.series(reactJavascript, browser.reload));
 }

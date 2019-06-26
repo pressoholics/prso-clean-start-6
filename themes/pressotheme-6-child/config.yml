@@ -1,5 +1,5 @@
 # Your project's server will run on localhost:xxxx at this port
-PORT: 'local.wordpress.test'
+PORT: 'divacup.test'
 
 # Autoprefixer will make sure your CSS works with these browsers
 COMPATIBILITY:
@@ -23,7 +23,7 @@ PATHS:
   # Paths to static assets that aren't images, CSS, or JavaScript
   assets:
     - "src/assets/**/*"
-    - "!src/assets/{img,js,scss}/**/*"
+    - "!src/assets/{img,js,scss,react}/**/*"
   # Paths to Sass libraries, which can then be loaded with @import
   sass:
     - "node_modules/foundation-sites/scss"
@@ -31,3 +31,6 @@ PATHS:
   # Paths to JavaScript entry points for webpack to bundle modules
   entries:
     - "src/assets/js/app.js"
+  # Paths to JavaScript entry points for webpack to bundle modules
+  react:
+    - "src/assets/react/app.js"

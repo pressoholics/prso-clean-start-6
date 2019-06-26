@@ -170,8 +170,42 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
  		
  		//Fix chrome admin area bug
  		add_action('admin_enqueue_scripts', array($this, 'chromefix_inline_css') );
+
+ 		//Wrap any gforms inline JS so that it executes once DOM has loaded
+	    add_filter( 'gform_cdata_open', array( $this, 'wrap_gform_cdata_open' ) );
+	    add_filter( 'gform_cdata_close', array( $this, 'wrap_gform_cdata_close' ) );
  		
  	}
+
+ 	/**
+ 	* wrap_gform_cdata_open
+ 	*
+ 	* @CALLED BY FILTER 'gform_cdata_open'
+ 	*
+ 	* Wrap any gforms inline JS so that it executes once DOM has loaded, allows jquery to be loaded in footer
+ 	*
+ 	* @access public
+ 	* @author Ben Moody
+ 	*/
+	public function wrap_gform_cdata_open( $content = '' ) {
+		$content = 'document.addEventListener( "DOMContentLoaded", function() {';
+		return $content;
+	}
+
+	/**
+	 * wrap_gform_cdata_close
+	 *
+	 * @CALLED BY FILTER 'gform_cdata_close'
+	 *
+	 * Wrap any gforms inline JS so that it executes once DOM has loaded, allows jquery to be loaded in footer
+	 *
+	 * @access public
+	 * @author Ben Moody
+	 */
+	function wrap_gform_cdata_close( $content = '' ) {
+		$content = ' }, false );';
+		return $content;
+	}
  	
  	/**
 	* theme_activation
@@ -305,6 +339,7 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 	    //NOTE if detected Child-Theme app.js will override Parent app.js
 	    if( is_child_theme() ) {
 	    	wp_register_script( 'prso-theme-app', get_stylesheet_directory_uri() . '/dist/assets/js/app.js', array('jquery'), PRSOTHEMEFRAMEWORK__VERSION, true );
+	    	wp_register_script( 'prso-theme-react', get_stylesheet_directory_uri() . '/dist/assets/react/app.js', array('prso-theme-app'), PRSOTHEMEFRAMEWORK__VERSION, true );
 	    }
 
 	    wp_enqueue_script( 'prso-theme-app' );

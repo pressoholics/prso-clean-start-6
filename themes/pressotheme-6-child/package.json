@@ -5,7 +5,9 @@
   "main": "gulpfile.babel.js",
   "scripts": {
     "start": "gulp",
-    "build": "gulp build --production"
+    "build": "gulp build --production",
+    "react": "gulp reactBuild --production",
+    "react-dev": "gulp reactDev"
   },
   "author": "ZURB <foundation@zurb.com>",
   "license": "MIT",

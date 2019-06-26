@@ -53,6 +53,16 @@ function prso_child_enqueue_scripts() {
 	if ( is_admin() ) {
 		return;
 	}
+	
+	//Enqueue react script of archive pages
+	if (
+		is_home() ||
+		is_category() ||
+		is_tag() ||
+		is_search()
+	) {
+		wp_enqueue_script( 'prso-theme-react' );
+	}
 
 	/** example
 	 * wp_enqueue_script('fbm-vendor',
@@ -66,6 +76,66 @@ function prso_child_enqueue_scripts() {
 	//Remove gutenberg default styles
 	wp_deregister_style( 'wp-block-library' );
 
+}
+
+/**
+* prso_conditional_enqueue_scripts
+*
+* @CALLED BY ACTION 'get_footer'
+*
+* Allow scripts to be enqueued based on content conditionals
+*
+* @access public
+* @author Ben Moody
+*/
+add_action( 'get_footer', 'prso_conditional_enqueue_scripts', 100 );
+function prso_conditional_enqueue_scripts() {
+
+	if ( is_admin() ) {
+		return;
+	}
+
+	//Maybe load owl carousel
+	if ( true === prso_page_has_carousel() ) {
+
+		wp_enqueue_script( 'fbm-vendor',
+			'https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js',
+			array( 'prso-theme-app' ),
+			'2.3.4',
+			true
+		);
+
+	}
+
+}
+
+/**
+ * prso_page_has_carousel
+ *
+ * Helper to store a state reflecting if a carousel component has been loaded
+ * in a page. Call this function and pass any string/bool as the new_state and
+ * then whenever this function is called after it will return true, else if
+ * will default to false
+ *
+ * @param string $new_state
+ *
+ * @return bool
+ * @access public
+ * @author Ben Moody
+ */
+function prso_page_has_carousel( $new_state = null ) {
+
+	static $state;
+
+	if ( ! empty( $new_state ) ) {
+		$state = $new_state;
+	}
+
+	if ( empty( $state ) ) {
+		return false;
+	}
+
+	return true;
 }
 
 /**

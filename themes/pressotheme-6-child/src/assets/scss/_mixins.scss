@@ -141,3 +141,21 @@ Ex: @include rem(line-height, 25px);
   margin-left: -#{rem-calc($gutter)};
   margin-right: -#{rem-calc($gutter)};
 }
+
+@mixin clear-list-style() {
+  @include clearfix;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  li {
+    margin: 0;
+    padding: 0;
+  }
+
+}
+
+@mixin flex-wrapper($justify: space-between) {
+  display: flex;
+  justify-content: $justify;
+}

@@ -530,3 +530,61 @@ function react_get_queried_object_id() {
 
 	return false;
 }
+
+/**
+* prso_theme_asset_link
+*
+* Helper to get url to theme dist assets dir
+ * $asset_path is relative to the assets dir, no slash required
+*
+* @access public
+* @author Ben Moody
+*/
+function prso_theme_asset_link( $asset_path = null ) {
+
+	$url = get_stylesheet_directory_uri();
+
+	$url = "{$url}/dist/assets/{$asset_path}";
+
+	return $url;
+}
+
+/**
+* prso_get_nav_menu_meta
+*
+* Helper to get nav menu meta data from the nav menu location (slug) used when the nav was registered
+*e
+* @access public
+* @author Ben Moody
+*/
+function prso_get_nav_menu_meta( $menu_name, $meta_node = 'name' ) {
+
+	//vars
+	$menu_object = null;
+	$locations = null;
+	$menu_id = null;
+
+	$locations = get_nav_menu_locations();
+
+	if( !is_array($locations) ) {
+		return null;
+	}
+
+	if( !isset($locations[ $menu_name ]) ) {
+		return null;
+	}
+
+	$menu_id = $locations[ $menu_name ];
+
+	$menu_object = wp_get_nav_menu_object( $menu_id );
+
+	if( false === $menu_object ) {
+		return null;
+	}
+
+	if( !isset($menu_object->$meta_node) ) {
+		return null;
+	}
+
+	return $menu_object->$meta_node;
+}
