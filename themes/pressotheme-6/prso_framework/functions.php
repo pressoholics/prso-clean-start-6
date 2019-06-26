@@ -339,7 +339,7 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 	    //NOTE if detected Child-Theme app.js will override Parent app.js
 	    if( is_child_theme() ) {
 	    	wp_register_script( 'prso-theme-app', get_stylesheet_directory_uri() . '/dist/assets/js/app.js', array('jquery'), PRSOTHEMEFRAMEWORK__VERSION, true );
-	    	wp_register_script( 'prso-theme-react', get_stylesheet_directory_uri() . '/dist/assets/react/app.js', array('prso-theme-app'), PRSOTHEMEFRAMEWORK__VERSION, true );
+	    	wp_register_script( 'prso-theme-react', get_stylesheet_directory_uri() . '/dist/react/app.js', array('prso-theme-app'), PRSOTHEMEFRAMEWORK__VERSION, true );
 	    }
 
 	    wp_enqueue_script( 'prso-theme-app' );

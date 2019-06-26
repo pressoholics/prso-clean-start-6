@@ -47,7 +47,7 @@ gulp.task('default',
 // Delete the "dist" folder
 // This happens every time a build starts
 function clean(done) {
-  rimraf(PATHS.dist, done);
+  rimraf(PATHS.dist + '/assets', done);
 }
 
 // Copy files out of the assets folder
@@ -193,7 +193,7 @@ function reactJavascript() {
       .on('error', e => { console.log(e); })
     ))
     .pipe($.if(!PRODUCTION, $.sourcemaps.write()))
-    .pipe(gulp.dest(PATHS.dist + '/assets/react'));
+    .pipe(gulp.dest(PATHS.dist + '/react'));
 }
 
 // Copy images to the "dist" folder
