@@ -1,15 +1,17 @@
+import $ from 'jquery';
+window.jQuery = $;
 
 export default class PrsoMotion {
 
   /**
-   * smooth_scroll_to
+   * smoothScrollTo
    *
    * helper to smooth scroll to element on page
    *
    * @access public
    * @author Ben Moody
    */
-   smooth_scroll_to( scrollToElement ) {
+   smoothScrollTo( scrollToElement ) {
 
     if( scrollToElement.length < 1 ) {
       return;
