@@ -42,6 +42,16 @@ class Prso_Acf_Block_Example {
 				'category'			=> $block_category,
 				'icon'				=> $block_icon,
 				'keywords'			=> $block_keywords,
+				'mode'              => 'auto', //auto, preview, edit
+				'align'             => '', //left, center, right, wide, full
+				'supports'          => array(
+					// disable alignment toolbar - 'left', 'right', 'full'
+					'align'     => false,
+					// disable preview/edit toggle
+					'mode'      => false,
+					// This property allows the block to be added multiple times. Defaults to true.
+					'multiple'  => true,
+				),
 			));
 
 		}
