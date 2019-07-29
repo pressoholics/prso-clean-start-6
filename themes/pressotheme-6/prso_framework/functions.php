@@ -548,7 +548,7 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 		add_filter( 'wp_get_attachment_image_attributes', array($this, 'get_image_size_srcset_attr'), 900, 3 );
 
 		//Filter sizes attribute added to images
-		add_filter( 'wp_calculate_image_sizes', array($this, 'custom_image_srcset_sizes_attr'), 900, 2 );
+		//add_filter( 'wp_calculate_image_sizes', array($this, 'custom_image_srcset_sizes_attr'), 900, 2 );
 
 	}
 
@@ -625,13 +625,19 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 		//Build sources for this image size based on rules
 		foreach ( $prso_srcset_rules[ $master_image_size ] as $rules ) {
 
+			$image_size = $master_image_size;
+
 			//Default to x2 version of image if custom image size not explicit
-			if( empty($rules['image_size']) ) {
+			if( !isset($rules['image_size']) && ('x' === $rules['descriptor']) ) {
 				$rules['image_size'] = "{$master_image_size}--x2";
 			}
 
+			if( isset($rules['image_size']) ) {
+				$image_size = $rules['image_size'];
+			}
+
 			$sources[ $rules['value'] ] = array(
-				'url'        => wp_get_attachment_image_url( $attachment_id, $rules['image_size'] ),
+				'url'        => wp_get_attachment_image_url( $attachment_id, $image_size ),
 				'descriptor' => $rules['descriptor'],
 				'value'      => intval( $rules['value'] ),
 			);
@@ -648,6 +654,9 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 
 		$attr['srcset'] = $srcset;
 
+		//Handle srcset sizes
+		$attr['sizes'] = $this->custom_image_srcset_sizes_attr( $master_image_size, '' );
+
 		return $attr;
 	}
 
@@ -661,7 +670,16 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 	 * @access public
 	 * @author Ben Moody
 	 */
-	public function custom_image_srcset_sizes_attr( $sizes, $size ) {
+	public function custom_image_srcset_sizes_attr( $custom_image_size, $sizes ) {
+
+		global $prso_srcset_rules;
+		$output = $sizes;
+
+		if( isset($prso_srcset_rules[ $custom_image_size ][0]['sizes']) && !empty($prso_srcset_rules[ $custom_image_size ][0]['sizes']) ) {
+
+			$output = $prso_srcset_rules[ $custom_image_size ][0]['sizes'];
+
+		}
 
 		/**
 		* prso_theme__image_sizes_attr
@@ -673,10 +691,11 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 		* @see PrsoThemeFunctions::custom_image_srcset_sizes_attr()
 		*
 		* @param string sizes_attrbute
+		* @param string current image size
 		*/
-		$sizes = apply_filters( 'prso_theme__image_sizes_attr', '' );
+		$output = apply_filters( 'prso_theme__image_sizes_attr', $output, $custom_image_size );
 
-		return $sizes;
+		return esc_attr( $output );
 	}
 	
 	// Add custom image sizes to post edit insert media option

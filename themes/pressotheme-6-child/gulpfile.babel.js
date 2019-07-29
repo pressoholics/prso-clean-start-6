@@ -35,7 +35,7 @@ gulp.task('build',
  gulp.series(clean, gulp.parallel(javascript,images, copy), sass, blockEditorSass, editorSass));
 
 gulp.task('reactDev',
-  gulp.series(reactJavascript, server, watch));
+  gulp.series(reactJavascript, server, reactWatch));
 
 gulp.task('reactBuild',
   gulp.series(reactJavascript));
