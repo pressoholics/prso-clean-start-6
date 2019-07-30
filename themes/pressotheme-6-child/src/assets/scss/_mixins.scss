@@ -159,3 +159,20 @@ Ex: @include rem(line-height, 25px);
   display: flex;
   justify-content: $justify;
 }
+
+@mixin border-radius( $radius ) {
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+  -ms-border-radius: $radius;
+  border-radius: $radius;
+}
+
+//Break content out of grid and make it full width
+@mixin break-out-of-grid() {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+}
