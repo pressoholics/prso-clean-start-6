@@ -249,7 +249,7 @@ function prso_get_search_query() {
 add_action( 'init', 'prso_tiny_mce_editor_styles', 10 );
 function prso_tiny_mce_editor_styles() {
 
-	add_editor_style( '/dist/assets/css/editor.css' );
+	add_editor_style( 'dist/assets/css/editor.css' );
 
 }
 
@@ -587,4 +587,38 @@ function prso_get_nav_menu_meta( $menu_name, $meta_node = 'name' ) {
 	}
 
 	return $menu_object->$meta_node;
+}
+
+/**
+ * prso_get_nav_menu_obj_by_location
+ *
+ * @access public
+ * @author Ben Moody
+ */
+function prso_get_nav_menu_obj_by_location( $location_name ) {
+
+	//vars
+	$menu_object = null;
+	$locations = null;
+	$menu_id = null;
+
+	$locations = get_nav_menu_locations();
+
+	if( !is_array($locations) ) {
+		return null;
+	}
+
+	if( !isset($locations[ $location_name ]) ) {
+		return null;
+	}
+
+	$menu_id = $locations[ $location_name ];
+
+	$menu_object = wp_get_nav_menu_object( $menu_id );
+
+	if( false === $menu_object ) {
+		return null;
+	}
+
+	return $menu_object;
 }

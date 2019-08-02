@@ -12,6 +12,13 @@
 //Import Core Block Warpper filter
 import './wrap-core-blocks/block.js';
 
+//Import Extend Core Block core/columns
+import './extend-core-columns/background-prop.js';
+import './extend-core-columns/width-prop.js';
+
+//Import Content Section Wrapper block
+import './content-section/block.js';
+
 //Import Carousel Block
 //import './carousel/block.js';
 

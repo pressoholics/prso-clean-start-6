@@ -60,6 +60,8 @@ class Prso_Acf_Block_Example {
 
 	public function render_block( $block ) {
 
+		add_filter( 'jetpack_lazy_images_skip_image_with_atttributes', '__return_true' );
+
 		// convert name ("acf/testimonial") into path friendly slug ("testimonial")
 		$slug = str_replace('acf/', '', $block['name']);
 
@@ -67,6 +69,8 @@ class Prso_Acf_Block_Example {
 		if( file_exists(STYLESHEETPATH . "/template_parts/block/{$slug}.php") ) {
 			include( STYLESHEETPATH . "/template_parts/block/{$slug}.php" );
 		}
+		
+		add_filter( 'jetpack_lazy_images_skip_image_with_atttributes', '__return_false' );
 
 	}
 

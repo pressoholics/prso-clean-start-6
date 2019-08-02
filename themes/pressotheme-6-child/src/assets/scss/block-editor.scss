@@ -5,9 +5,9 @@ div.editor-styles-wrapper {
   @import 'foundation';
 
   // Global styles
-  @include foundation-forms;
+  //@include foundation-forms;
   @include foundation-typography;
-  @include foundation-callout;
+  //@include foundation-callout;
 
   .acf-block-body.is-preview {
     @include foundation-button;
@@ -18,11 +18,15 @@ div.editor-styles-wrapper {
 
   // Theme global sass
   @import "global/_typography.scss";
-  @import "global/_forms.scss";
-  @import "global/_shared.scss";
+  //@import "global/_forms.scss";
+  //@import "global/_shared.scss";
 
   // Gutenberg block styles
-  @import "components/blocks/_blocks.scss";
+  //@import "components/blocks/_blocks.scss";
+
+.wp-block {
+    max-width: 90%;
+  }
 
   .callout {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;

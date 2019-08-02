@@ -43,6 +43,15 @@ class Prso_Gutenberg {
 			filemtime( $dist_path . '/blocks.build.js' ), // Version: filemtime — Gets file modification time.
 			true // Enqueue the script in the footer.
 		);
+		
+		//Editor Styles
+		wp_enqueue_style(
+			'prso-guten-styles',
+			$dist_url . '/blocks.editor.build.css',
+			false,
+			'1.0',
+			'all'
+		);
 
 	}
 
