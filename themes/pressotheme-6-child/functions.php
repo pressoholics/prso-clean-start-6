@@ -53,16 +53,6 @@ function prso_child_enqueue_scripts() {
 	if ( is_admin() ) {
 		return;
 	}
-	
-	//Enqueue react script of archive pages
-	if (
-		is_home() ||
-		is_category() ||
-		is_tag() ||
-		is_search()
-	) {
-		wp_enqueue_script( 'prso-theme-react' );
-	}
 
 	/** example
 	 * wp_enqueue_script('fbm-vendor',
@@ -192,7 +182,17 @@ function prso_theme_localize() {
 		),
 		
 		'queryParams' => array(),
+		'reactScripts' => array(),
 	);
+
+if (
+		is_home() ||
+		is_category() ||
+		is_tag() ||
+		is_search()
+	) {
+		$data_array['reactConfig']['reactScripts'][] = get_stylesheet_directory_uri() . '/dist/react/app.js';
+	}
 
 	//If is posts page
 	if ( is_home() ) {

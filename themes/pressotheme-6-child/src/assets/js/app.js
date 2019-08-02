@@ -1,6 +1,8 @@
 import $ from 'jquery';
 import 'what-input';
 
+import PrsoLoadReactScripts from './lib/load-react-scripts';
+
 //Import motion
 //import MotionHelper from './lib/motion';
 
@@ -17,3 +19,10 @@ require('foundation-sites');
 //import {Tabs,Accordion} from './lib/foundation-explicit-pieces';
 
 $(document).foundation();
+
+$(document).ready(function() {
+
+  //Maybe load react scripts
+  new PrsoLoadReactScripts();
+
+});

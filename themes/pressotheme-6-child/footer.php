@@ -39,5 +39,6 @@
 		<?php wp_footer(); // js scripts are inserted using this function ?>
 
 	</body>
+	<?php do_action('prso_print_scripts'); ?>
 	
 </html>
