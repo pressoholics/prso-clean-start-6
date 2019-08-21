@@ -6,6 +6,7 @@
 class Prso_Acf_Block_Example {
 
 	protected static $block_name = 'example';
+	public static $full_block_name = 'acf/example';
 
 	public function __construct() {
 
@@ -24,7 +25,7 @@ class Prso_Acf_Block_Example {
 		//vars
 		$block_title = 'Example';
 		$block_description = 'Example block';
-		$block_category = 'formatting';
+		$block_category = 'prso-blocks';
 		$block_icon = 'admin-home';
 		$block_keywords = array(
 			'example'
@@ -34,6 +35,7 @@ class Prso_Acf_Block_Example {
 		if( function_exists('acf_register_block') ) {
 
 			// register block
+			// https://www.advancedcustomfields.com/resources/acf_register_block_type/
 			acf_register_block(array(
 				'name'				=> self::$block_name,
 				'title'				=> $block_title,
@@ -69,11 +71,11 @@ class Prso_Acf_Block_Example {
 		if( file_exists(STYLESHEETPATH . "/template_parts/block/{$slug}.php") ) {
 			include( STYLESHEETPATH . "/template_parts/block/{$slug}.php" );
 		}
-		
+
 		add_filter( 'jetpack_lazy_images_skip_image_with_atttributes', '__return_false' );
 
 	}
 
 
 }
-new Prso_Acf_Block_Example();
+//new Prso_Acf_Block_Example();

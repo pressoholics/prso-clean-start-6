@@ -373,7 +373,7 @@ function prso_excerpt_more( $more ) {
  * @access public
  * @author Ben Moody
  */
-add_action( 'pre_get_posts', 'prso_pre_get_posts' );
+add_action( 'pre_get_posts', 'prso_pre_get_posts', 1 );
 function prso_pre_get_posts( $query ) {
 
 	if ( is_admin() ) {
@@ -387,7 +387,6 @@ function prso_pre_get_posts( $query ) {
 	$query->set( 'orderby', 'date' );
 	$query->set( 'order', 'DESC' );
 	$query->set( 'post_per_page', get_option( 'posts_per_page' ) );
-	$query->set( 'post_status', 'publish' );
 
 }
 
@@ -621,4 +620,80 @@ function prso_get_nav_menu_obj_by_location( $location_name ) {
 	}
 
 	return $menu_object;
+}
+
+/**
+* prso_remove_add_to_any_script
+*
+* @CALLED BY ACTION 'wp_enqueue_scripts'
+*
+* Only load the addtoany plugin resources on specific pages, defaults to post single only
+*
+* @access public
+* @author Ben Moody
+*/
+add_action( 'wp_enqueue_scripts', 'prso_remove_add_to_any_script', 900 );
+function prso_remove_add_to_any_script() {
+
+	//Allow on single posts
+	if( is_singular('post') ) {
+		return;
+	}
+
+	wp_dequeue_script('addtoany');
+	wp_dequeue_style('addtoany');
+
+}
+
+/**
+ * prso_remove_add_to_any_header_script
+ *
+ * @CALLED BY ACTION 'wp'
+ *
+ * Only load the addtoany plugin resources on specific pages, defaults to post single only
+ *
+ * @access public
+ * @author Ben Moody
+ */
+add_action( 'wp', 'prso_remove_add_to_any_header_script' );
+function prso_remove_add_to_any_header_script() {
+
+	//Allow on single posts
+	if( is_singular('post') ) {
+		return;
+	}
+
+	remove_action('wp_head', 'A2A_SHARE_SAVE_head_script');
+
+}
+
+/**
+* prso_i18n_string_translation
+*
+* @CALLED BY FILTER 'gettext_with_context'
+*
+* Hook into WP i18n system and use context to try and find an acf option with the same key, replace if valid option value found.
+*
+* @access public
+* @author Ben Moody
+*/
+add_filter( 'gettext_with_context', 'prso_i18n_string_translation', 900, 4 );
+function prso_i18n_string_translation( $translation, $text, $context, $domain ) {
+
+	if( $domain !== PRSOTHEMEFRAMEWORK__DOMAIN ) {
+		return $translation;
+	}
+
+	if (strpos($context, 'prso-i18n') === false) {
+		return $translation;
+	}
+
+	//Try and fetch translation based on context
+	$acf_string = get_field( $context, 'option' );
+
+	if( !$acf_string ) {
+		return $translation;
+	}
+
+	return $acf_string;
 }

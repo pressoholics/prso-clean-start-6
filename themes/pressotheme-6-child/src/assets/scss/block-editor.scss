@@ -28,6 +28,11 @@ div.editor-styles-wrapper {
     max-width: 90%;
   }
 
+.acf-block-preview {
+    overflow: hidden;
+    @include foundation-button;
+  }
+
   .callout {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
     label {
