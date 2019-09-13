@@ -80,6 +80,9 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 	 */
 	private function theme_setup() {
 
+		//Remove wordpress defult image sizes
+		add_filter( 'intermediate_image_sizes_advanced', array($this, 'remove_default_image_sizes'), 10, 1 );
+
 		//Theme init action 'after_switch_theme'
 		add_action( 'init', array($this, 'theme_activation') );
 
@@ -225,6 +228,26 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 		//Force Gravity forms to load scripts in footer
 		add_filter('gform_init_scripts_footer', '__return_true');
 
+	}
+
+	/**
+	* intermediate_image_sizes_advanced
+	*
+	* @CALLED BY FILTER/ACTION 'intermediate_image_sizes_advanced'
+	*
+	* remove default WP image sizes when generating thumnails
+	*
+	* @access public
+	* @author Ben Moody
+	*/
+	public function remove_default_image_sizes( $sizes ) {
+
+		unset( $sizes['small']); // 150px
+		unset( $sizes['medium']); // 300px
+		unset( $sizes['large']); // 1024px
+		unset( $sizes['medium_large']); // 768px
+
+		return $sizes;
 	}
 
 	/**
@@ -460,7 +483,7 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 		$defaults = array(
 			'width' 	=> NULL,
 			'height'	=> NULL,
-			'crop'		=> false
+			'crop'		=> false,
 		);
 
 		//Check settings from config class
@@ -511,15 +534,15 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 							//Add custom thumbnail image size to wordpress
 							add_image_size( $name, $width, $height, $crop );
 
-							//High res version
-							if( is_int($width) ) {
-								$width = $width * 2;
-							}
-
-							if( is_int($height) ) {
-								$height = $height * 2;
-							}
-							add_image_size( "{$name}--x2", $width, $height, $crop );
+//							//High res version
+//							if( is_int($width) ) {
+//								$width = $width * 2;
+//							}
+//
+//							if( is_int($height) ) {
+//								$height = $height * 2;
+//							}
+//							add_image_size( "{$name}--x2", $width, $height, $crop );
 
 							break;
 					}
@@ -645,6 +668,10 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 
 			$image_size = $master_image_size;
 
+			if( !isset($rules['descriptor']) || !isset($rules['value']) ) {
+				continue;
+			}
+
 			//Default to x2 version of image if custom image size not explicit
 			if( !isset($rules['image_size']) && ('x' === $rules['descriptor']) ) {
 				$rules['image_size'] = "{$master_image_size}--x2";
@@ -663,10 +690,24 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 		}
 
 		if ( empty( $sources ) ) {
-			return null;
+			return $attr;
 		}
 
 		foreach ( $sources as $source ) {
+
+			/**
+			* prso_get_image_size_srcset_attr
+			*
+			 * Filter the srcset attr for a specific custom image size
+			 *
+			* @since 1.0.0
+			*
+			* @see get_image_size_srcset_attr
+			*
+			* @param
+			*/
+			$source = apply_filters('prso_get_image_size_srcset_attr', $source, $master_image_size, $attachment_id, $attachment);
+
 			$srcset .= str_replace( ' ', '%20', $source['url'] ) . ' ' . $source['value'] . $source['descriptor'] . ', ';
 		}
 
