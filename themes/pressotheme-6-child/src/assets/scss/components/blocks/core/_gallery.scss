@@ -34,14 +34,14 @@ ul.wp-block-gallery {
   @each $size in $gut-columns-sizes {
 
     &.columns-#{$size} {
-      @include xy-grid-layout( map-get($gut-columns-responsive-small, $size), '.blocks-gallery-item', true, $grid-margin-gutters, padding, right bottom left );
+      @include xy-grid-layout( map-get($gut-columns-responsive-small, $size), '.blocks-gallery-item', null, $grid-margin-gutters, padding, right bottom left );
 
       @include breakpoint(medium up) {
-        @include xy-grid-layout( map-get($gut-columns-responsive-medium, $size), '.blocks-gallery-item', true, $grid-margin-gutters, padding, right bottom left );
+        @include xy-grid-layout( map-get($gut-columns-responsive-medium, $size), '.blocks-gallery-item', null, $grid-margin-gutters, padding, right bottom left );
       }
 
       @include breakpoint(large up) {
-        @include xy-grid-layout($size, '.blocks-gallery-item', true, $grid-margin-gutters, padding, right bottom left);
+        @include xy-grid-layout($size, '.blocks-gallery-item', null, $grid-margin-gutters, padding, right bottom left);
       }
 
     }

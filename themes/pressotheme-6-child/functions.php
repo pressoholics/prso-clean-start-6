@@ -65,6 +65,12 @@ function prso_child_enqueue_scripts() {
 
 	//Remove gutenberg default styles
 	wp_deregister_style( 'wp-block-library' );
+	
+	//Accesability remove plugin css
+	wp_deregister_style( 'ui-fontsize.css' );
+	
+	//Dev only react
+	//wp_enqueue_script('dc-react-dev', get_stylesheet_directory_uri() . '/dist/react/app.js', array('prso-theme-app'), '1.11.3', true);
 
 }
 
