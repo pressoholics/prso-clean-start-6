@@ -53,6 +53,7 @@ class PrsoThemeConfig {
 	 *        'crop'        => false
 	 *  )
 	 */
+	 protected $disable_thumbnail_generation_on_upload = false; //If using Jetpack, enable this to put less load when uploading images as jetpack will resizes on the fly
 	protected $theme_thumbnail_settings = array(
 		'thumbnail'          => array(
 			'config' => array(

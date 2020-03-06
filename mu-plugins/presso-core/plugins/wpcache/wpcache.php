@@ -164,6 +164,11 @@ class Prso_Cache {
 
 		//First try and get cache
 		$get_result = wp_cache_get( $key, $get_group, false );
+		
+		//Found cached result?
+		if ( false !== $get_result ) {
+		    return $get_result;
+		}
 
 		//No cache yet, set it
 		$query_result = new WP_Query( $args );

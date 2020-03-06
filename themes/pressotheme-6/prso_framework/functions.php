@@ -283,7 +283,7 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 
 		if( !is_admin() && !function_exists('get_current_screen') ) {
 			wp_deregister_script('jquery');                                   // De-Register jQuery
-			wp_register_script('jquery', '', '', '', true);                   // It's already in the Header
+			wp_register_script('jquery', 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js', '', '3.4.1', false);		
 		}
 
 	}
@@ -478,6 +478,12 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 	 * @author	Ben Moody
 	 */
 	private function add_custom_thumbnails() {
+
+		if( true === $this->disable_thumbnail_generation_on_upload ) {
+			if( isset($_SERVER['REQUEST_URI']) && ($_SERVER['REQUEST_URI'] === '/wp-admin/async-upload.php') ) {
+				return;
+			}
+		}
 
 		//Init vars
 		$defaults = array(

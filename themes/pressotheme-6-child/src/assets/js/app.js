@@ -6,6 +6,9 @@ import PrsoLoadReactScripts from './lib/load-react-scripts';
 //Import motion
 //import MotionHelper from './lib/motion';
 
+import PrsoAccessability from './accessability';
+import BlockCoreColumns from './blocks/core-columns';
+
 // Foundation JS relies on a global varaible. In ES6, all imports are hoisted
 // to the top of the file so if we used`import` to import Foundation,
 // it would execute earlier than we have assigned the global variable.
@@ -22,16 +25,13 @@ $(document).foundation();
 
 $(document).ready(function() {
 	
-	window.addEventListener('keydown', handleFirstTab);
+	//Process core columns block
+  new BlockCoreColumns();
+  
+  //Fire accessability scripts
+  new PrsoAccessability();
 
   //Maybe load react scripts
   new PrsoLoadReactScripts();
 
 });
-
-function handleFirstTab(e) {
-  if (e.keyCode === 9) { // the "I am a keyboard user" key
-    document.body.classList.add('user-is-tabbing');
-    window.removeEventListener('keydown', handleFirstTab);
-  }
-}

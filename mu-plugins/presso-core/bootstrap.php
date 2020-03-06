@@ -125,6 +125,7 @@
 		    'wpcache',
 		    'acf',
 		    'gutenberg',
+		    'i18n',
 		);
  		
  		return $result;

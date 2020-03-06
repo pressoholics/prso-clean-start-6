@@ -180,18 +180,41 @@ function gcc_enqueue_bugherd_admin() {
  * @access    public
  * @author    Ben Moody
  */
-//add_action( 'login_enqueue_scripts', 'prso_custom_login_view' );
+add_action( 'login_enqueue_scripts', 'prso_custom_login_view' );
 function prso_custom_login_view() { ?>
 	<style type="text/css">
 		body {
+			background-color: #8C5896 !important;
+		}
 
+		a {
+			color: #ffffff !important;
+		}
+
+		a:hover {
+			color: #FF7F7F !important;
 		}
 
 		.login h1 a {
-			background-image: url(<?php echo get_stylesheet_directory_uri(); ?>/dist/assets/img/admin/site_login_logo.png);
-			background-size: cover;
-			display: block;
-			width: 324px;
+			background-image: url(<?php echo get_stylesheet_directory_uri(); ?>/dist/assets/img/divacup-logo.png) !important;
+			background-size: cover !important;
+			display: block !important;
+			width: 250px !important;
+		}
+
+		.wp-core-ui .button-primary {
+			background: #000 !important;
+			border-color: #000 !important;
+			box-shadow: 0 1px 0 #ccc !important;
+			color: #fff !important;
+			text-decoration: none !important;
+			text-shadow: none !important;
+		}
+
+		input[type="text"]:focus,
+		input[type="password"]:focus {
+			border-color: #FF7F7F !important;
+			box-shadow: none !important;
 		}
 	</style>
 <?php }
@@ -589,40 +612,6 @@ function prso_get_nav_menu_meta( $menu_name, $meta_node = 'name' ) {
 }
 
 /**
- * prso_get_nav_menu_obj_by_location
- *
- * @access public
- * @author Ben Moody
- */
-function prso_get_nav_menu_obj_by_location( $location_name ) {
-
-	//vars
-	$menu_object = null;
-	$locations = null;
-	$menu_id = null;
-
-	$locations = get_nav_menu_locations();
-
-	if( !is_array($locations) ) {
-		return null;
-	}
-
-	if( !isset($locations[ $location_name ]) ) {
-		return null;
-	}
-
-	$menu_id = $locations[ $location_name ];
-
-	$menu_object = wp_get_nav_menu_object( $menu_id );
-
-	if( false === $menu_object ) {
-		return null;
-	}
-
-	return $menu_object;
-}
-
-/**
 * prso_remove_add_to_any_script
 *
 * @CALLED BY ACTION 'wp_enqueue_scripts'
@@ -667,33 +656,3 @@ function prso_remove_add_to_any_header_script() {
 
 }
 
-/**
-* prso_i18n_string_translation
-*
-* @CALLED BY FILTER 'gettext_with_context'
-*
-* Hook into WP i18n system and use context to try and find an acf option with the same key, replace if valid option value found.
-*
-* @access public
-* @author Ben Moody
-*/
-add_filter( 'gettext_with_context', 'prso_i18n_string_translation', 900, 4 );
-function prso_i18n_string_translation( $translation, $text, $context, $domain ) {
-
-	if( $domain !== PRSOTHEMEFRAMEWORK__DOMAIN ) {
-		return $translation;
-	}
-
-	if (strpos($context, 'prso-i18n') === false) {
-		return $translation;
-	}
-
-	//Try and fetch translation based on context
-	$acf_string = get_field( $context, 'option' );
-
-	if( !$acf_string ) {
-		return $translation;
-	}
-
-	return $acf_string;
-}

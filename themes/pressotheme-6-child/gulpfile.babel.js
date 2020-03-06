@@ -151,6 +151,9 @@ function editorSass() {
 
 let webpackConfig = {
   mode: (PRODUCTION ? 'production' : 'development'),
+  externals: {
+    jquery: 'jQuery'
+  },
   module: {
     rules: [
       {

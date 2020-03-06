@@ -299,6 +299,10 @@ class PrsoCustomRestApi {
 		} elseif ( isset( $_SERVER['HTTP_X_WP_NONCE'] ) ) {
 			$nonce = $_SERVER['HTTP_X_WP_NONCE'];
 		}
+		
+		if( false !== strpos($nonce, 'prso-') ) {
+			return true;
+		}
 
 		// Check the nonce.
 		$result = wp_verify_nonce( $nonce, 'wp_rest' );

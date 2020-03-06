@@ -16,9 +16,9 @@ class PrsoMultilingualPress {
 
 	function __construct() {
 
-		add_action( 'admin_init', array( $this, 'admin_init' ) );
+		//add_action( 'admin_init', array( $this, 'admin_init' ) );
 
-		add_action( 'admin_footer', array( $this, 'render_admin_css' ) );
+		//add_action( 'admin_footer', array( $this, 'render_admin_css' ) );
 
 	}
 
@@ -207,6 +207,51 @@ class PrsoMultilingualPress {
 		)->searchTranslations( $mlp_query_args );
 
 		return $post_translations;
+	}
+
+	public static function multilingualpress_get_translations()
+	{
+
+		//Is MLP plugin installed?
+		if( is_wp_error( $mlp_installed = self::is_mlp_installed() ) ) {
+			return $mlp_installed;
+		}
+
+		$args = \Inpsyde\MultilingualPress\Framework\Api\TranslationSearchArgs::forContext(new \Inpsyde\MultilingualPress\Framework\WordpressContext())
+		                                                                      ->forSiteId(get_current_blog_id());
+
+		$translations = \Inpsyde\MultilingualPress\resolve(
+			\Inpsyde\MultilingualPress\Framework\Api\Translations::class
+		)->searchTranslations($args);
+
+		return $translations;
+	}
+
+	public static function get_language_switcher_items_html() {
+
+		$translations = PrsoMultilingualPress::multilingualpress_get_translations();
+
+		$items = '';
+
+		if( !is_wp_error($translations) && is_array($translations) ) {
+			foreach ($translations as $translation) {
+				$language = $translation->language();
+				$native_name = $language->nativeName();
+				$url = $translation->remoteUrl();
+
+				$native_name_explode = explode(' (', $native_name);
+
+				if( isset($native_name_explode[0]) ) {
+					$native_name = $native_name_explode[0];
+				}
+
+				if ($url) {
+					$items .= "<li><a href='${url}' title='". $native_name ."'>". $native_name ."</a></li>";
+				}
+			}
+		}
+
+		return $items;
 	}
 
 	/**
@@ -425,6 +470,18 @@ class PrsoMultilingualPress {
 		echo $output;
 
 		return;
+	}
+
+	public static function get_current_locale_nicename() {
+
+		$locale = get_locale();
+		$split = explode('_', $locale);
+
+		if( !isset($split[0]) ) {
+			return $locale;
+		}
+
+		return $split[0];
 	}
 
 }

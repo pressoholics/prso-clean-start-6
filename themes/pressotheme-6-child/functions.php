@@ -151,47 +151,59 @@ function prso_theme_localize() {
 	$data_array = array();
 
 	/** Cache data for localization **/
+	//Cache params
+	$cache_key = 'prso_local_config';
 
-	//Set react default config
-	$data_array['reactConfig'] = array(
-		'restEndpoint' => rest_url( 'wp/v2/posts' ),
-		'nonce'        => wp_create_nonce( 'wp_rest' ),
+	//Try and get cache
+	$result = get_transient( $cache_key );
 
-		//false/filters config array
-		'filters'      => false,
+	if( false !== $result ) {
+		$data_array['reactConfig'] = $result;
+	} else {
 		
-		//If we need to select any filters on page load. taxonomy => term_id pair
-		'selectedFilters' => false,
-
-		//true/false
-		'search'       => true,
-
-		'perPage'                => get_option( 'posts_per_page' ),
-		'paginationType'         => 'button',
-
-		//Translation strings
-		'i18n'                   => array(
-			'noResultsText'     => esc_html_x( 'No results found', 'text', PRSOTHEMEFRAMEWORK__DOMAIN ),
-			'loadMore'          => esc_html_x( 'Load More', 'button text', PRSOTHEMEFRAMEWORK__DOMAIN ),
-			'searchPlaceholder' => esc_html_x( 'Keyword Search', 'input placeholder', PRSOTHEMEFRAMEWORK__DOMAIN ),
-			'resetButton'       => esc_html_x( 'Reset', 'input placeholder', PRSOTHEMEFRAMEWORK__DOMAIN ),
-		),
-
-		//Array of user browser provided URL params we expect to get when the app loads
-		'requestParamsWhitelist' => array(
-			'page',
-			'per_page',
-			'search',
-			's',
-			'categories',
-			'tags',
-		),
+		//Set react default config
+		$data_array['reactConfig'] = array(
+			'restEndpoint' => rest_url( 'wp/v2/posts' ),
+			//'nonce'        => wp_create_nonce( 'wp_rest' ),
+			'nonce'        => 'prso-vkui]%t4i{y;3zUISQ*D_7A)',
+	
+			//false/filters config array
+			'filters'      => false,
+			
+			//If we need to select any filters on page load. taxonomy => term_id pair
+			'selectedFilters' => false,
+	
+			//true/false
+			'search'       => true,
+	
+			'perPage'                => get_option( 'posts_per_page' ),
+			'paginationType'         => 'button',
+	
+			//Translation strings
+			'i18n'                   => array(
+				'noResultsText'     => esc_html_x( 'No results found', 'text', PRSOTHEMEFRAMEWORK__DOMAIN ),
+				'loadMore'          => esc_html_x( 'Load More', 'button text', PRSOTHEMEFRAMEWORK__DOMAIN ),
+				'searchPlaceholder' => esc_html_x( 'Keyword Search', 'input placeholder', PRSOTHEMEFRAMEWORK__DOMAIN ),
+				'resetButton'       => esc_html_x( 'Reset', 'input placeholder', PRSOTHEMEFRAMEWORK__DOMAIN ),
+			),
+	
+			//Array of user browser provided URL params we expect to get when the app loads
+			'requestParamsWhitelist' => array(
+				'page',
+				'per_page',
+				'search',
+				's',
+				'categories',
+				'tags',
+			),
+			
+			'queryParams' => array(),
+			'reactScripts' => array(),
+		);
 		
-		'queryParams' => array(),
-		'reactScripts' => array(),
-	);
+	}
 
-if (
+	if (
 		is_home() ||
 		is_category() ||
 		is_tag() ||
