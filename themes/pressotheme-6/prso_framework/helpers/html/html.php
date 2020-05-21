@@ -18,8 +18,10 @@ class HtmlHelper {
  	
  	function __construct() {
  		
- 		//Add custom action hooks for post helpers
- 		$this->custom_action_hooks();
+ 		add_action( 'init', array(
+ 			$this,
+			'custom_action_hooks'
+		));
  		
  	}
  	
@@ -28,41 +30,41 @@ class HtmlHelper {
 	* 
 	* Create any custom WP Action Hooks here for post helpers
 	* 
-	* @access 	private
+	* @access 	public
 	* @author	Ben Moody
 	*/
- 	private function custom_action_hooks() {
+ 	public function custom_action_hooks() {
  		
  		/**
  		* 1. center_thumbnail
  		* 	 Returns contents for style attr for img
  		*/
- 		$this->add_filter( 'prso_center_thumbnail', 'center_thumbnail', 10, 3 );
+ 		//$this->add_filter( 'prso_center_thumbnail', 'center_thumbnail', 10, 3 );
  		
  		/**
  		* 2. get_the_excerpt
  		* 	 Detects if post content is using 'more' tag and echos the_content OR
  		*	 if 'more' tag is not used then defaults to calling the_excerpt()
  		*/
- 		$this->add_action( 'prso_get_the_excerpt', 'get_the_excerpt', 10 );
+ 		//$this->add_action( 'prso_get_the_excerpt', 'get_the_excerpt', 10 );
  		
  		/**
  		* 3. trim_string
  		* 	 Filter a string and trim it to a number of words
  		*/
- 		$this->add_filter( 'prso_trim_string', 'trim_string', 10, 3 );
+ 		//$this->add_filter( 'prso_trim_string', 'trim_string', 10, 3 );
  		
  		/**
  		* 4. get_social_button
  		* 	 Returns html and JS required to output the requested social media share button
  		*/
- 		$this->add_filter( 'prso_share_button', 'get_social_button', 10, 1 );
+ 		//$this->add_filter( 'prso_share_button', 'get_social_button', 10, 1 );
  		
  		/**
  		* 5. detect_ie
  		* 	 Returns true/false if any version of IE is dectected
  		*/
- 		$this->add_filter( 'prso_detect_ie', 'detect_ie', 10, 1 );
+ 		//$this->add_filter( 'prso_detect_ie', 'detect_ie', 10, 1 );
  		
  		/**
  		* 6. remove_empty_p
@@ -602,13 +604,15 @@ class HtmlHelper {
 	* @author	Ben Moody
 	*/
 	private function add_filter( $tag = NULL, $method = NULL, $priority = 10, $accepted_args = NULL ) {
-		
-		if( isset($tag,$method) ) {
-			//Check that action has not already been added
-			if( !has_filter($tag) ) {
-				add_filter( $tag, array($this, $method), $priority, $accepted_args );
-			}
-		}
+
+		add_filter( $tag, array($this, $method), $priority, $accepted_args );
+
+//		if( isset($tag,$method) ) {
+//			//Check that action has not already been added
+//			if( !has_filter($tag) ) {
+//				add_filter( $tag, array($this, $method), $priority, $accepted_args );
+//			}
+//		}
 		
 	}
 

@@ -17,6 +17,30 @@ class Prsoi18n {
 
 		add_action('init', array($this, 'init_i18n'));
 
+		//Clear transient cache field update
+		add_filter('acf/update_value', array($this, 'clear_string_cache_on_acf_update'), 10, 3);
+
+	}
+
+	/**
+	* clear_string_cache_on_acf_update
+	*
+	* @CALLED BY FILTER 'acf/update_value'
+	*
+	* Detect i18n strings being updated via acf, clear string cache
+	*
+	* @access public
+	* @author Ben Moody
+	*/
+	public function clear_string_cache_on_acf_update( $value, $post_id, $field ) {
+
+		if ($this->is_i18n_string_field($field['name']) === false) {
+			return $value;
+		}
+
+		delete_transient( self::STRING_CACHE_KEY );
+
+		return $value;
 	}
 
 	/**
@@ -51,7 +75,7 @@ class Prsoi18n {
 			return $translation;
 		}
 
-		if (strpos($context, 'prso-i18n') === false) {
+		if ($this->is_i18n_string_field($context) === false) {
 			return $translation;
 		}
 
@@ -62,6 +86,12 @@ class Prsoi18n {
 		}
 
 		return $acf_string;
+	}
+
+	private function is_i18n_string_field( $context ) {
+
+		return strpos($context, 'prso-i18n');
+
 	}
 
 	/**

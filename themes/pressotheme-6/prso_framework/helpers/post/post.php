@@ -19,7 +19,7 @@ class PostHelper {
 	function __construct() {
 		
 		//Add custom action hooks for post helpers
- 		$this->custom_action_hooks();
+ 		//$this->custom_action_hooks();
 		
 	}
 	
