@@ -283,7 +283,7 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 
 		if( !is_admin() && !function_exists('get_current_screen') ) {
 			wp_deregister_script('jquery');                                   // De-Register jQuery
-			wp_register_script('jquery', 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js', '', '3.4.1', false);		
+			wp_register_script('jquery', 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js', '', '3.4.1', false);
 		}
 
 	}
@@ -419,8 +419,8 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 
 		//Init vars
 		$nav_menu_args	= array(
-			'main_nav' => 'The Main Menu',   // main nav in header
-			'footer_links' => 'Footer Links' // secondary nav in footer
+//			'main_nav' => 'The Main Menu',   // main nav in header
+//			'footer_links' => 'Footer Links' // secondary nav in footer
 		);
 		$post_format_args = array();
 		$custom_background_args = array(
@@ -660,6 +660,10 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 		}
 
 		if( !isset($attachment->ID) ) {
+			return $attr;
+		}
+
+		if( !is_string($master_image_size) ) {
 			return $attr;
 		}
 

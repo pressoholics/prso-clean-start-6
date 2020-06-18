@@ -33,14 +33,14 @@ $gut-columns-responsive-medium: (
   @each $size in $gut-columns-sizes {
 
     &.has-#{$size}-columns {
-      @include xy-grid-layout( map-get($gut-columns-responsive-small, $size), '.wp-block-column', null, $grid-margin-gutters, padding );
+      @include xy-grid-layout( map-get($gut-columns-responsive-small, $size), '.wp-block-column', true, $grid-margin-gutters, padding );
 
       @include breakpoint(medium up) {
-        @include xy-grid-layout( map-get($gut-columns-responsive-medium, $size), '.wp-block-column', null, $grid-margin-gutters, padding );
+        @include xy-grid-layout( map-get($gut-columns-responsive-medium, $size), '.wp-block-column', true, $grid-margin-gutters, padding );
       }
 
       @include breakpoint(large up) {
-        @include xy-grid-layout($size, '.wp-block-column', null, $grid-margin-gutters, padding);
+        @include xy-grid-layout($size, '.wp-block-column', true, $grid-margin-gutters, padding);
       }
 
     }
